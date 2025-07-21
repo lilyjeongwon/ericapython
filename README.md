@@ -1,10 +1,12 @@
 # ericapython
 2025년 여름방학 한양대학교 파이썬게임 개발
+- 팀명: 5KEY
+- 팀원: 1710_류정훈, 1722_최지호, 1721_최연우, 2806_권민서, 2808_김도윤
 
 ## 2025.07.21(월)
 [질의응답 게시판 바로가기](http://www.hue-youthsw.com/22) , 패스워드: osgc2025 <br>
 [BGM(배경음악) 사이ㅡ 셀바이뮤직](https://www.sellbuymusic.com) <br>
-[도트이미지로 변환]()
+[도트이미지로 변환](https://giventofly.github.io/pixelit/#tryit)
 
 [프로젝트 환경 구성]
 1. Python 환경 및 의존성 설정 

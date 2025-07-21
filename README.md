@@ -46,7 +46,7 @@
 
 1. 목표
   - 작물별 성장 로직 구조화(클래스 사용)
-  - asses, src, tests, docs 폴더 정리
+  - assets, src, tests, docs 폴더 정리
   - VSCode에서 GitHub 연동
   - README.md, .gitignore, requirements.txt 포함
 

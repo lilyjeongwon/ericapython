@@ -38,6 +38,134 @@
 6. 팀원이 아래 명령어로 동일한 패키지 패키지를 설치할 수 있습니다.
   - pip install -r requirements.txt
 
-##
-4. 프로젝트 문서 작성
-  - 프로젝트 개요 및 가이드 문서 작성
+## 2025.07.22(화)
+
+1. 목표
+  - 작물별 성장 로직 구조화(클래스 사용)
+  - asses, src, tests, docs 폴더 정리
+  - VSCode에서 GitHub 연동
+  - README.md, .gitignore, requirements.txt 포함
+
+2. 효율적인 프로젝트 폴더 구조
+```
+ericapython/
+├── assets/                # 이미지, 사운드 등 리소스
+│   ├── images/
+│   │   ├── potato.png
+│   │   ├── sunflower.png
+│   │   ├── pea.png
+│   │   ├── lettuce.png
+│   │   └── apple_tree.png
+│   └── fonts/
+├── src/                   # 메인 게임 코드
+│   ├── __init__.py
+│   ├── main.py
+│   ├── game.py            # 전체 게임 흐름 제어
+│   ├── plant.py           # 작물 클래스 정의
+│   └── settings.py        # 전역 설정
+├── tests/                 # 테스트 코드 (옵션)
+│   └── test_growth.py
+├── docs/                  # 설명 자료나 PPT (수업용)
+├── requirements.txt       # 설치 패키지
+├── .gitignore             # Git에 올리지 않을 파일
+├── README.md              # 프로젝트 설명
+└── venv/                  # 가상환경 (Git에는 제외)
+```
+
+3. 각 파일 역할 요약
+  파일/폴더              설명
+  plant.py              감자, 해바라기, 상추, 완두콩, 사과나무 등 작물 클래스 정의(OOP)
+  game.py               게임 흐름 관리: 시작, 클릭 처리, 성장, 판매
+  main.py               진입점, game.run() 호출
+  assets/               작물 이미지 등 리소스 저장
+  settings.py           화면 크기, 색상, 폰트 설정 등 전역 변수 관리
+
+4. 작물 클래스 예시(src/plant.py)
+```
+lass Plant:
+    def __init__(self, name, image_path, growth_rate):
+        self.name = name
+        self.image_path = image_path
+        self.growth_rate = growth_rate
+        self.growth = 0
+
+    def grow(self):
+        self.growth += self.growth_rate
+
+    def get_status(self):
+        if self.growth < 10:
+            return "새싹"
+        elif self.growth < 20:
+            return "성장 중"
+        else:
+            return "완전히 자람"
+```
+5. .gitignore 예시
+```
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+```
+
+6. requirements.txt 예시
+```
+mkdir assets src tests
+cd assets
+mkdir fonts images sounds
+cd ..
+secho "__pycache__/"
+python -m venv venv
+source venv/Scripts/activate
+pip install pygame
+python -m pygame.examples.aliens
+pip freeze > requirements.txt
+```
+
+7. VSCode에서 GitHub 연동
+- VSCode에서 폴더 열기(eriapython)
+- git bash 터미널에서 Git 초기화:
+```
+git init
+git remote add origin https://github.com/lilyjeongwon/ericapython.git
+```
+  - 첫 커밋 및 푸시
+```
+git add .
+git commit -m " 프로젝트 초기 설저어 및 작물 클래스 생성"
+git brtanch -M main
+git push -u origin main
+```
+
+8. README.md
+```
+# 🌱 Erica's 작물 키우기 게임
+
+5가지 작물을 키우는 파이썬 pygame 게임입니다.
+
+## 작물 종류
+- 감자
+- 해바라기
+- 완두콩
+- 상추
+- 사과나무
+
+## 실행 방법
+```bash
+pip install -r requirements.txt
+python src/main.py
+```
+9. 질의응답 게시판 바로가기
+```
+---
+
+## ✨ 다음 작업 추천
+
+- 작물별 이미지 구분
+- 클릭마다 성장 → 이미지 상태 변경
+- 성장단계에 따라 텍스트 변화
+
+---
+
+```
+

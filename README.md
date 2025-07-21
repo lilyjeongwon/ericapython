@@ -2,8 +2,8 @@
 2025년 여름방학 한양대학교 파이썬게임 개발
 
 ## 2025.07.21(월)
-[질의응답 게시판 바로가기](http://www.hue-youthsw.com/22)  <br> 패스워드: osgc2025
-[BGM(배경음악) 사이ㅡ 셀바이뮤직](https://m.sellbymusic.com)
+[질의응답 게시판 바로가기](http://www.hue-youthsw.com/22)  <br> 패스워드: osgc2025 <br>
+[BGM(배경음악) 사이ㅡ 셀바이뮤직](https://sellbymusic.com) <br>
 [도트이미지로 변환]()
 
 [프로젝트 환경 구성]

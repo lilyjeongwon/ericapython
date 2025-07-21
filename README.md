@@ -4,7 +4,7 @@
 - 팀원: 1710_류정훈, 1722_최지호, 1721_최연우, 2806_권민서, 2808_김도윤
 
 ## 2025.07.21(월)
-[질의응답 게시판 바로가기](http://www.hue-youthsw.com/22 target="_blank") , 패스워드: osgc2025 <br>
+[질의응답 게시판 바로가기](http://www.hue-youthsw.com/22) , 패스워드: osgc2025 <br>
 [BGM(배경음악) 사이ㅡ 셀바이뮤직](https://www.sellbuymusic.com) <br>
 [도트이미지로 변환](https://giventofly.github.io/pixelit/#tryit)
 

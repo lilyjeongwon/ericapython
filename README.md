@@ -3,6 +3,9 @@
 - 주제: 키우기 게임(거지게임)
 - 팀명: 5KEY
 - 팀원: 1710_류정훈, 1722_최지호, 1721_최연우, 2806_권민서, 2808_김도윤
+- http://hue-youthsw.com/26 , osgc2025
+- sellbuymusic 
+- https://giventofly.github.io/pixelit/#tryit
 
 ## 2025.07.21(월)
 [질의응답 게시판 바로가기](http://www.hue-youthsw.com/22) , 패스워드: osgc2025 <br>

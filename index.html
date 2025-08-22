@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 농장 시뮬레이터 게임</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .game-info {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .download-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #218838;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .feature h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .emoji {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌾 농장 시뮬레이터 게임</h1>
+        
+        <div class="game-info">
+            <p><strong>파이썬과 Pygame으로 만든 재미있는 농장 시뮬레이터 게임입니다!</strong></p>
+            <p>다양한 작물을 재배하고, 도구를 업그레이드하며, 농장을 발전시켜보세요!</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="emoji">📱</div>
+                <h3>반응형 디자인</h3>
+                <p>휴대폰, 태블릿, PC 모든 기기에서 완벽하게 작동</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">🌱</div>
+                <h3>다양한 작물</h3>
+                <p>해바라기, 토마토, 옥수수 등 다양한 작물 재배</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">🛠️</div>
+                <h3>도구 시스템</h3>
+                <p>물뿌리개와 낫을 업그레이드하여 효율성 증대</p>
+            </div>
+        </div>
+        
+        <h2>🎮 게임 다운로드</h2>
+        <a href="https://github.com/lilyjeongwon/ericapython/archive/refs/heads/main.zip" class="download-btn">
+            📦 ZIP 파일 다운로드
+        </a>
+        
+        <h2>⚙️ 설치 및 실행 방법</h2>
+        <div class="game-info">
+            <ol style="text-align: left;">
+                <li><strong>Python 3.8 이상</strong> 설치 (python.org에서 다운로드)</li>
+                <li><strong>Pygame 라이브러리</strong> 설치: <code>pip install pygame</code></li>
+                <li>다운로드한 파일 압축 해제</li>
+                <li>터미널에서 <code>python scripts/main.py</code> 실행</li>
+            </ol>
+        </div>
+        
+        <h2>🎯 게임 조작법</h2>
+        <div class="game-info">
+            <ul style="text-align: left;">
+                <li><strong>마우스 클릭</strong>: 작물 심기, 물주기, 수확하기</li>
+                <li><strong>상점 버튼</strong>: 씨앗과 도구 구매</li>
+                <li><strong>설정 아이콘</strong>: 볼륨 조절</li>
+                <li><strong>F1 키</strong>: 빠른 성장 모드 토글</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+            <h3>🌟 개발자 정보</h3>
+            <p>이 게임은 Python과 Pygame을 사용하여 개발되었습니다.</p>
+            <p>GitHub: <a href="https://github.com/lilyjeongwon/ericapython" target="_blank">https://github.com/lilyjeongwon/ericapython</a></p>
+        </div>
+    </div>
+</body>
+</html> 

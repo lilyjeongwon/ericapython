@@ -103,8 +103,52 @@ atexit.register(on_exit)
 pygame.init()
 pygame.mixer.init()
 
+# 화면 크기 감지 및 반응형 설정
+def get_screen_info():
+    """현재 화면 크기를 감지하고 적절한 게임 화면 크기를 결정합니다."""
+    # 사용 가능한 화면 정보 가져오기
+    info = pygame.display.Info()
+    screen_width = info.current_w
+    screen_height = info.current_h
+    
+    print(f"감지된 화면 크기: {screen_width}x{screen_height}")
+    
+    # 기본 게임 크기 (1100x720)
+    BASE_WIDTH = 1100
+    BASE_HEIGHT = 720
+    
+    # 화면 크기에 따른 스케일 팩터 계산
+    scale_x = screen_width / BASE_WIDTH
+    scale_y = screen_height / BASE_HEIGHT
+    scale_factor = min(scale_x, scale_y, 1.5)  # 최대 1.5배까지만 확대
+    
+    # 실제 게임 화면 크기 계산
+    game_width = int(BASE_WIDTH * scale_factor)
+    game_height = int(BASE_HEIGHT * scale_factor)
+    
+    print(f"계산된 스케일 팩터: {scale_factor}")
+    print(f"게임 화면 크기: {game_width}x{game_height}")
+    
+    return game_width, game_height, scale_factor
+
+# 화면 크기 및 스케일 팩터 설정
+WIDTH, HEIGHT, SCALE_FACTOR = get_screen_info()
+
+# 반응형 크기 계산 함수들
+def scale_size(base_size):
+    """기본 크기를 현재 화면에 맞게 조정합니다."""
+    return int(base_size * SCALE_FACTOR)
+
+def scale_rect(base_rect):
+    """기본 Rect를 현재 화면에 맞게 조정합니다."""
+    return pygame.Rect(
+        int(base_rect.x * SCALE_FACTOR),
+        int(base_rect.y * SCALE_FACTOR),
+        int(base_rect.width * SCALE_FACTOR),
+        int(base_rect.height * SCALE_FACTOR)
+    )
+
 # 화면 설정
-WIDTH, HEIGHT = 1100, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("농장 시뮬레이터") # 캡션 변경
 
@@ -126,6 +170,43 @@ TAB_ACTIVE_COLOR = (70, 70, 70) # 탭 활성화 색상
 
 # 메인 화면 영역
 middle_rect = pygame.Rect(0, 0, WIDTH, HEIGHT)
+
+# 반응형 크기 상수들
+BASE_TOOL_ICON_SIZE = 100
+BASE_SETTINGS_ICON_SIZE = 50
+BASE_ITEM_SIZE = 80
+BASE_PLOT_BORDER_THICKNESS = 4
+BASE_TOOL_BORDER_THICKNESS = 4
+BASE_PLUS_SIGN_SIZE = 30
+BASE_SHOP_ITEM_IMAGE_SIZE = 60
+
+TOOL_ICON_SIZE = scale_size(BASE_TOOL_ICON_SIZE)
+SETTINGS_ICON_SIZE = scale_size(BASE_SETTINGS_ICON_SIZE)
+ITEM_SIZE = scale_size(BASE_ITEM_SIZE)
+PLOT_BORDER_THICKNESS = scale_size(BASE_PLOT_BORDER_THICKNESS)
+TOOL_BORDER_THICKNESS = scale_size(BASE_TOOL_BORDER_THICKNESS)
+PLUS_SIGN_SIZE = scale_size(BASE_PLUS_SIGN_SIZE)
+SHOP_ITEM_IMAGE_SIZE = scale_size(BASE_SHOP_ITEM_IMAGE_SIZE)
+
+# 반응형 간격 설정
+BASE_TOOL_SPACING = 20
+BASE_ITEM_GAP_X = 20
+BASE_ITEM_GAP_Y = 20
+BASE_TOOL_ICON_MARGIN = 20
+
+TOOL_SPACING = scale_size(BASE_TOOL_SPACING)
+ITEM_GAP_X = scale_size(BASE_ITEM_GAP_X)
+ITEM_GAP_Y = scale_size(BASE_ITEM_GAP_Y)
+TOOL_ICON_MARGIN = scale_size(BASE_TOOL_ICON_MARGIN)
+
+# 반응형 위치 설정
+BASE_FIELD_START_X = 140
+BASE_FIELD_START_Y = 100
+BASE_GLOBAL_X_OFFSET = 0
+
+FIELD_START_X = scale_size(BASE_FIELD_START_X)
+FIELD_START_Y = scale_size(BASE_FIELD_START_Y)
+GLOBAL_X_OFFSET = scale_size(BASE_GLOBAL_X_OFFSET)
 
 image_names = ["a.png"]
 images = []
@@ -151,7 +232,6 @@ except pygame.error as e:
 
 settings_icon = None
 settings_icon_path = BASE_DIR / "assets" / "images" / "settings_icon.png"
-SETTINGS_ICON_SIZE = 50
 try:
     settings_icon = pygame.image.load(settings_icon_path)
     settings_icon = pygame.transform.scale(settings_icon, (SETTINGS_ICON_SIZE, SETTINGS_ICON_SIZE))
@@ -469,57 +549,89 @@ DAY_CHANGE_INTERVAL = 10
 last_day_change_time = time.time()
 fast_growth_mode = False # F1 키로 토글될 빠른 성장 모드
 
-# 폰트 설정
+# 폰트 설정 (반응형)
 font_name = "Galmuri14.ttf" # 사용하려는 폰트 파일 이름으로 변경하세요 (예: NanumGothicCoding.ttf)
 font_path = BASE_DIR / "assets" / "fonts" / font_name # 'assets/fonts/' 폴더에 폰트를 넣었을 경우
 
+# 반응형 폰트 크기 설정
+BASE_FONT_SIZE = 30
+BASE_PRICE_TEXT_FONT_SIZE = 25
+BASE_MULTIPLIER_TEXT_FONT_SIZE = 20
+BASE_TITLE_FONT_SIZE = 70
+BASE_INGAME_BUTTON_FONT_SIZE = 25
+BASE_BUTTON_FONT_SIZE = 35
+BASE_SETTINGS_TITLE_FONT_SIZE = 50
+BASE_VOLUME_LABEL_FONT_SIZE = 30
+BASE_SHOP_TITLE_FONT_SIZE = 50
+BASE_SEED_NAME_FONT_SIZE = 20
+BASE_COOLDOWN_FONT_SIZE = 40
+BASE_TOOL_SHOP_TITLE_FONT_SIZE = 25
+BASE_TOOL_SHOP_PRICE_FONT_SIZE = 25
+BASE_DESCRIPTION_FONT_SIZE = 18
+
+# 스케일된 폰트 크기 계산
+FONT_SIZE = scale_size(BASE_FONT_SIZE)
+PRICE_TEXT_FONT_SIZE = scale_size(BASE_PRICE_TEXT_FONT_SIZE)
+MULTIPLIER_TEXT_FONT_SIZE = scale_size(BASE_MULTIPLIER_TEXT_FONT_SIZE)
+TITLE_FONT_SIZE = scale_size(BASE_TITLE_FONT_SIZE)
+INGAME_BUTTON_FONT_SIZE = scale_size(BASE_INGAME_BUTTON_FONT_SIZE)
+BUTTON_FONT_SIZE = scale_size(BASE_BUTTON_FONT_SIZE)
+SETTINGS_TITLE_FONT_SIZE = scale_size(BASE_SETTINGS_TITLE_FONT_SIZE)
+VOLUME_LABEL_FONT_SIZE = scale_size(BASE_VOLUME_LABEL_FONT_SIZE)
+SHOP_TITLE_FONT_SIZE = scale_size(BASE_SHOP_TITLE_FONT_SIZE)
+SEED_NAME_FONT_SIZE = scale_size(BASE_SEED_NAME_FONT_SIZE)
+COOLDOWN_FONT_SIZE = scale_size(BASE_COOLDOWN_FONT_SIZE)
+TOOL_SHOP_TITLE_FONT_SIZE = scale_size(BASE_TOOL_SHOP_TITLE_FONT_SIZE)
+TOOL_SHOP_PRICE_FONT_SIZE = scale_size(BASE_TOOL_SHOP_PRICE_FONT_SIZE)
+DESCRIPTION_FONT_SIZE = scale_size(BASE_DESCRIPTION_FONT_SIZE)
+
 try:
-    font = pygame.font.Font(font_path, 30)
-    price_text_font = pygame.font.Font(font_path, 25) # 가격 텍스트 폰트
-    multiplier_text_font = pygame.font.Font(font_path, 20) # 배율 텍스트 폰트
-    title_font = pygame.font.Font(font_path, 70)
-    ingame_button_font = pygame.font.Font(font_path, 25) #버튼 폰트
-    button_font = pygame.font.Font(font_path, 35)
-    settings_title_font = pygame.font.Font(font_path, 50)
-    volume_label_font = pygame.font.Font(font_path, 30)
-    shop_title_font = pygame.font.Font(font_path, 50)
-    seed_name_font = pygame.font.Font(font_path, 20)
-    cooldown_font = pygame.font.Font(font_path, 40)
-    tool_shop_title_font = pygame.font.Font(font_path, 25) # 제작대 -> 도구상점 폰트 변경
-    tool_shop_pirce_font = pygame.font.Font(font_path, 25) # 도구 상점 가격 폰트
-    description_font = pygame.font.Font(font_path, 18) # 새로 추가된 설명 폰트
+    font = pygame.font.Font(font_path, FONT_SIZE)
+    price_text_font = pygame.font.Font(font_path, PRICE_TEXT_FONT_SIZE) # 가격 텍스트 폰트
+    multiplier_text_font = pygame.font.Font(font_path, MULTIPLIER_TEXT_FONT_SIZE) # 배율 텍스트 폰트
+    title_font = pygame.font.Font(font_path, TITLE_FONT_SIZE)
+    ingame_button_font = pygame.font.Font(font_path, INGAME_BUTTON_FONT_SIZE) #버튼 폰트
+    button_font = pygame.font.Font(font_path, BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.Font(font_path, SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.Font(font_path, VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.Font(font_path, SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.Font(font_path, SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.Font(font_path, COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.Font(font_path, TOOL_SHOP_TITLE_FONT_SIZE) # 제작대 -> 도구상점 폰트 변경
+    tool_shop_pirce_font = pygame.font.Font(font_path, TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.Font(font_path, DESCRIPTION_FONT_SIZE) # 새로 추가된 설명 폰트
 except FileNotFoundError:
     print(f"오류: 폰트 파일을 찾을 수 없습니다. 경로를 확인하세요: {font_path}")
     print("시스템에 맑은 고딕이 없거나, 다른 OS를 사용한다면 적절한 한글 폰트 경로로 변경하거나,")
     print("프로젝트 폴더에 .ttf 폰트 파일을 넣고 그 경로를 사용해 주세요.")
     # 폰트 파일을 찾을 수 없을 때 대체 폰트 사용 (한글 폰트가 지원되는 시스템 폰트)
-    font = pygame.font.SysFont('malgungothic', 30)
-    price_text_font = pygame.font.SysFont('malgungothic', 25) # 가격 텍스트 폰트
-    multiplier_text_font = pygame.font.SysFont('malgungothic', 20) # 배율 텍스트 폰트
-    title_font = pygame.font.SysFont('malgungothic', 70)
-    button_font = pygame.font.SysFont('malgungothic', 40)
-    settings_title_font = pygame.font.SysFont('malgungothic', 50)
-    volume_label_font = pygame.font.SysFont('malgungothic', 30)
-    shop_title_font = pygame.font.SysFont('malgungothic', 50)
-    seed_name_font = pygame.font.SysFont('malgungothic', 20)
-    cooldown_font = pygame.font.SysFont('malgungothic', 40)
-    tool_shop_title_font = pygame.font.SysFont('malgungothic', 50) # 대체 폰트도 함께 설정
-    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', 20) # 도구 상점 가격 폰트
-    description_font = pygame.font.SysFont('malgungothic', 18) # 대체 폰트도 함께 설정
+    font = pygame.font.SysFont('malgungothic', FONT_SIZE)
+    price_text_font = pygame.font.SysFont('malgungothic', PRICE_TEXT_FONT_SIZE) # 가격 텍스트 폰트
+    multiplier_text_font = pygame.font.SysFont('malgungothic', MULTIPLIER_TEXT_FONT_SIZE) # 배율 텍스트 폰트
+    title_font = pygame.font.SysFont('malgungothic', TITLE_FONT_SIZE)
+    button_font = pygame.font.SysFont('malgungothic', BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.SysFont('malgungothic', SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.SysFont('malgungothic', VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.SysFont('malgungothic', SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.SysFont('malgungothic', SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.SysFont('malgungothic', COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_TITLE_FONT_SIZE) # 대체 폰트도 함께 설정
+    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.SysFont('malgungothic', DESCRIPTION_FONT_SIZE) # 대체 폰트도 함께 설정
 except Exception as e:
     print(f"폰트 로드 중 알 수 없는 오류 발생: {e}")
     # 다른 오류 발생 시 시스템 폰트 사용
-    font = pygame.font.SysFont('malgungothic', 30)
-    title_font = pygame.font.SysFont('malgungothic', 70)
-    button_font = pygame.font.SysFont('malgungothic', 40)
-    settings_title_font = pygame.font.SysFont('malgungothic', 50)
-    volume_label_font = pygame.font.SysFont('malgungothic', 30)
-    shop_title_font = pygame.font.SysFont('malgungothic', 50)
-    seed_name_font = pygame.font.SysFont('malgungothic', 20)
-    cooldown_font = pygame.font.SysFont('malgungothic', 40)
-    tool_shop_title_font = pygame.font.SysFont('malgungothic', 50) # 대체 폰트도 함께 설정
-    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', 20) # 도구 상점 가격 폰트
-    description_font = pygame.font.SysFont('malgungothic', 18) # 대체 폰트도 함께 설정
+    font = pygame.font.SysFont('malgungothic', FONT_SIZE)
+    title_font = pygame.font.SysFont('malgungothic', TITLE_FONT_SIZE)
+    button_font = pygame.font.SysFont('malgungothic', BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.SysFont('malgungothic', SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.SysFont('malgungothic', VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.SysFont('malgungothic', SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.SysFont('malgungothic', SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.SysFont('malgungothic', COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_TITLE_FONT_SIZE) # 대체 폰트도 함께 설정
+    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.SysFont('malgungothic', DESCRIPTION_FONT_SIZE) # 대체 폰트도 함께 설정
 
 # --- 사운드 볼륨 변수 및 초기 설정 ---
 master_volume = 1
@@ -579,9 +691,19 @@ show_tutorial = False  # 튜토리얼 오버레이 상태
 # 튜토리얼 단계 관리 변수 추가
 tutorial_step = 1  # 1: 씨앗 목록 버튼 클릭 안내, 2: 씨앗1(해바라기) 클릭 안내
 
-# 시작 버튼 설정
-start_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 50, 200, 70)  # 처음부터 버튼
-continue_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 140, 200, 70)  # 이어하기 버튼
+# 시작 버튼 설정 (반응형)
+BASE_BUTTON_WIDTH = 200
+BASE_BUTTON_HEIGHT = 70
+BASE_BUTTON_OFFSET_Y = 50
+BASE_BUTTON_SPACING = 90
+
+BUTTON_WIDTH = scale_size(BASE_BUTTON_WIDTH)
+BUTTON_HEIGHT = scale_size(BASE_BUTTON_HEIGHT)
+BUTTON_OFFSET_Y = scale_size(BASE_BUTTON_OFFSET_Y)
+BUTTON_SPACING = scale_size(BASE_BUTTON_SPACING)
+
+start_button_rect = pygame.Rect(WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + BUTTON_OFFSET_Y, BUTTON_WIDTH, BUTTON_HEIGHT)  # 처음부터 버튼
+continue_button_rect = pygame.Rect(WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + BUTTON_OFFSET_Y + BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT)  # 이어하기 버튼
 
 def play_random_music():
     global is_music_paused_by_code
@@ -606,13 +728,27 @@ def play_random_music():
 MUSIC_END_EVENT = pygame.USEREVENT + 1
 pygame.mixer.music.set_endevent(MUSIC_END_EVENT)
 
-# --- 설정 화면 관련 변수 ---
-settings_panel_rect = pygame.Rect(WIDTH // 2 - 200, HEIGHT // 2 - 250, 400, 500)
-close_button_rect = pygame.Rect(settings_panel_rect.right - 40, settings_panel_rect.top + 10, 30, 30) # 설정 닫기 버튼 기준
+# --- 설정 화면 관련 변수 (반응형) ---
+BASE_SETTINGS_PANEL_WIDTH = 400
+BASE_SETTINGS_PANEL_HEIGHT = 500
+BASE_SETTINGS_PANEL_OFFSET_X = 200
+BASE_SETTINGS_PANEL_OFFSET_Y = 250
 
-SLIDER_WIDTH = 250
-SLIDER_HEIGHT = 10
-KNOB_RADIUS = 15
+SETTINGS_PANEL_WIDTH = scale_size(BASE_SETTINGS_PANEL_WIDTH)
+SETTINGS_PANEL_HEIGHT = scale_size(BASE_SETTINGS_PANEL_HEIGHT)
+SETTINGS_PANEL_OFFSET_X = scale_size(BASE_SETTINGS_PANEL_OFFSET_X)
+SETTINGS_PANEL_OFFSET_Y = scale_size(BASE_SETTINGS_PANEL_OFFSET_Y)
+
+settings_panel_rect = pygame.Rect(WIDTH // 2 - SETTINGS_PANEL_OFFSET_X, HEIGHT // 2 - SETTINGS_PANEL_OFFSET_Y, SETTINGS_PANEL_WIDTH, SETTINGS_PANEL_HEIGHT)
+close_button_rect = pygame.Rect(settings_panel_rect.right - scale_size(40), settings_panel_rect.top + scale_size(10), scale_size(30), scale_size(30)) # 설정 닫기 버튼 기준
+
+BASE_SLIDER_WIDTH = 250
+BASE_SLIDER_HEIGHT = 10
+BASE_KNOB_RADIUS = 15
+
+SLIDER_WIDTH = scale_size(BASE_SLIDER_WIDTH)
+SLIDER_HEIGHT = scale_size(BASE_SLIDER_HEIGHT)
+KNOB_RADIUS = scale_size(BASE_KNOB_RADIUS)
 
 master_vol_slider_x = settings_panel_rect.centerx - SLIDER_WIDTH // 2
 master_vol_slider_y = settings_panel_rect.top + 150
@@ -639,35 +775,43 @@ is_dragging_music_vol = False
 is_dragging_sfx_vol = False # 효과음 볼륨 드래그 상태 변수
 # --- 여기까지 설정 화면 관련 변수 ---
 
-# --- 상점 및 도구 상점 버튼 관련 변수 ---
-BUTTON_WIDTH = 120
-BUTTON_HEIGHT = 60
-BUTTON_MARGIN = 10
+# --- 상점 및 도구 상점 버튼 관련 변수 (반응형) ---
+BASE_SHOP_BUTTON_WIDTH = 120
+BASE_SHOP_BUTTON_HEIGHT = 60
+BASE_SHOP_BUTTON_MARGIN = 10
 
-shop_button_rect = pygame.Rect(WIDTH - BUTTON_WIDTH - BUTTON_MARGIN,
-                               HEIGHT // 2 - BUTTON_HEIGHT - BUTTON_MARGIN // 2,
-                               BUTTON_WIDTH, BUTTON_HEIGHT)
+SHOP_BUTTON_WIDTH = scale_size(BASE_SHOP_BUTTON_WIDTH)
+SHOP_BUTTON_HEIGHT = scale_size(BASE_SHOP_BUTTON_HEIGHT)
+SHOP_BUTTON_MARGIN = scale_size(BASE_SHOP_BUTTON_MARGIN)
 
-tool_shop_button_rect = pygame.Rect(WIDTH - BUTTON_WIDTH - BUTTON_MARGIN,
-                               shop_button_rect.bottom + BUTTON_MARGIN,
-                               BUTTON_WIDTH, BUTTON_HEIGHT)
+shop_button_rect = pygame.Rect(WIDTH - SHOP_BUTTON_WIDTH - SHOP_BUTTON_MARGIN,
+                               HEIGHT // 2 - SHOP_BUTTON_HEIGHT - SHOP_BUTTON_MARGIN // 2,
+                               SHOP_BUTTON_WIDTH, SHOP_BUTTON_HEIGHT)
 
-# 상점 스크롤 관련 변수 (다른 전역 변수들 아래에 추가)
+tool_shop_button_rect = pygame.Rect(WIDTH - SHOP_BUTTON_WIDTH - SHOP_BUTTON_MARGIN,
+                               shop_button_rect.bottom + SHOP_BUTTON_MARGIN,
+                               SHOP_BUTTON_WIDTH, SHOP_BUTTON_HEIGHT)
+
+# 상점 스크롤 관련 변수 (반응형)
 shop_scroll_offset = 0 # 현재 스크롤 위치. 음수 값은 아래로 스크롤되었음을 의미
-SHOP_SCROLL_SPEED = 30 # 마우스 휠 스크롤 속도
+BASE_SHOP_SCROLL_SPEED = 30 # 마우스 휠 스크롤 속도
+SHOP_SCROLL_SPEED = scale_size(BASE_SHOP_SCROLL_SPEED)
 is_dragging_scrollbar = False # 스크롤바 핸들 드래그 중인지 여부
 scrollbar_drag_offset_y = 0 # 스크롤바 핸들 드래그 시작 시 마우스와 핸들의 상대 위치
 scrollbar_rect = None # 스크롤바 전체 영역 (매 프레임 업데이트될 수 있음)
 scrollbar_handle_rect = None # 스크롤바 핸들 영역 (매 프레임 업데이트될 수 있음)
 
-# 상점 패널 크기 및 위치 조정
-SHOP_PANEL_WIDTH = 1000 # 가로 길이 더 늘림
-SHOP_PANEL_HEIGHT = 600
+# 상점 패널 크기 및 위치 조정 (반응형)
+BASE_SHOP_PANEL_WIDTH = 1000 # 가로 길이 더 늘림
+BASE_SHOP_PANEL_HEIGHT = 600
+
+SHOP_PANEL_WIDTH = scale_size(BASE_SHOP_PANEL_WIDTH)
+SHOP_PANEL_HEIGHT = scale_size(BASE_SHOP_PANEL_HEIGHT)
 shop_panel_rect = pygame.Rect(WIDTH // 2 - SHOP_PANEL_WIDTH // 2, HEIGHT // 2 - SHOP_PANEL_HEIGHT // 2, SHOP_PANEL_WIDTH, SHOP_PANEL_HEIGHT)
 
 # 도구 상점 패널 (상점과 동일한 크기 및 위치)
-TOOL_SHOP_PANEL_WIDTH = 1000
-TOOL_SHOP_PANEL_HEIGHT = 600
+TOOL_SHOP_PANEL_WIDTH = SHOP_PANEL_WIDTH
+TOOL_SHOP_PANEL_HEIGHT = SHOP_PANEL_HEIGHT
 tool_shop_panel_rect = pygame.Rect(WIDTH // 2 - TOOL_SHOP_PANEL_WIDTH // 2, HEIGHT // 2 - TOOL_SHOP_PANEL_HEIGHT // 2, TOOL_SHOP_PANEL_WIDTH, TOOL_SHOP_PANEL_HEIGHT)
 
 
@@ -1155,7 +1299,6 @@ for col in range(NUM_ITEMS_PER_ROW):
 hovered_plot_type = None
 hovered_plot_index = -1
 
-
 # 작물별 가격 정보 (키는 식물 타입 문자열과 매칭)
 # (중복 선언 제거, 위에서 이미 선언됨)
 
@@ -1221,13 +1364,13 @@ tool_shop_items = {
         {"id": "watering_can_legendary", "name": "전설의 물뿌리개", "price": 100000000, "multiplier": 64, "description": "전설 속에서만 전해지던 물뿌리개입니다. 전체 밭에 영향을 줍니다.", "image": load_tool_image("watering_can_tier6.png")},
     ],
     "scythe": [
-        {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("scythe_tier1.png")if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0,
-        {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier2.png")},
-        {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier3.png")},
-        {"id": "scythe_improved", "name": "좋아진 낫", "price": 5000000, "multiplier": 2.5, "description": "수확 효율이 눈에 띄게 좋아진 낫입니다. 농가의 희망이죠.", "image": load_tool_image("scythe_tier4.png")},
-        {"id": "scythe_abandoned_master", "name": "장인이 쓰다 버린 낫", "price": 20000000, "multiplier": 4, "description": "장인이 더 이상 사용하지 않아 버려진 낫입니다. 엄청난 힘이 숨겨져 있습니다.", "image": load_tool_image("scythe_tier5.png")},
-        {"id": "scythe_omniblade", "name": "모든걸 베어버릴것 같은 낫", "price": 100000000, "multiplier": 6, "description": "강력한 힘이 느껴지는 낫입니다. 베지 못할 것이 없습니다.", "image": load_tool_image("scythe_tier6.png")},
-        {"id": "scythe_legendary", "name": "전설의 낫", "price": 500000000, "multiplier": 10, "description": "전설 속에 등장하는 낫입니다. 모든 작물을 풍요롭게 만듭니다.", "image": load_tool_image("scythe_tier7.png")},
+        {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("sickle_cracked.png")if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0,
+        {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier1.png")},
+        {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier2.png")},
+        {"id": "scythe_improved", "name": "좋아진 낫", "price": 5000000, "multiplier": 2.5, "description": "수확 효율이 눈에 띄게 좋아진 낫입니다. 농가의 희망이죠.", "image": load_tool_image("scythe_tier3.png")},
+        {"id": "scythe_abandoned_master", "name": "장인이 쓰다 버린 낫", "price": 20000000, "multiplier": 4, "description": "장인이 더 이상 사용하지 않아 버려진 낫입니다. 엄청난 힘이 숨겨져 있습니다.", "image": load_tool_image("scythe_tier4.png")},
+        {"id": "scythe_omniblade", "name": "모든걸 베어버릴것 같은 낫", "price": 100000000, "multiplier": 6, "description": "강력한 힘이 느껴지는 낫입니다. 베지 못할 것이 없습니다.", "image": load_tool_image("scythe_tier5.png")},
+        {"id": "scythe_legendary", "name": "전설의 낫", "price": 500000000, "multiplier": 10, "description": "전설 속에 등장하는 낫입니다. 모든 작물을 풍요롭게 만듭니다.", "image": load_tool_image("scythe_tier6.png")},
     ]
 }
 
@@ -1974,7 +2117,7 @@ def draw_game_screen():
 
     # 설정 아이콘 (오른쪽 아래로 이동)
     if settings_icon:
-        settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - 10, HEIGHT - 10)) # 오른쪽 아래에 배치
+        settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - scale_size(10), HEIGHT - scale_size(10))) # 오른쪽 아래에 배치 (반응형)
         screen.blit(settings_icon, settings_icon_rect)
     else:
         # 아이콘이 없을 경우 임시 사각형으로 표시 (디버깅용)
@@ -2488,7 +2631,7 @@ def handle_game_screen_click(pos):
                 return
             return
     # 설정 아이콘 클릭
-    settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - 10, HEIGHT - 10)) # 오른쪽 아래로 이동
+    settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - scale_size(10), HEIGHT - scale_size(10))) # 오른쪽 아래로 이동 (반응형)
     if settings_icon_rect.collidepoint(pos):
         previous_game_state = game_state
         game_state = 'SETTINGS'

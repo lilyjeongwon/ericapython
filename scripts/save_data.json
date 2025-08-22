@@ -1,39 +1,31 @@
 {
   "player_inventory": {
-    "sunflower": 4,
+    "sunflower": 5,
     "lettuce": 5,
     "potato": 5,
     "pea": 5,
-    "dragonfruit": 0
+    "dragonfruit": 5
   },
   "player_tools": {
     "watering_can": {
-      "id": "watering_can_better",
-      "multiplier": 8,
-      "owned_tool_ids": [
-        "watering_can_rusted",
-        "watering_can_better"
-      ]
+      "id": "watering_can_rusted",
+      "multiplier": 1
     },
     "scythe": {
-      "id": "scythe_decent",
-      "multiplier": 1.5,
-      "owned_tool_ids": [
-        "sickle_cracked",
-        "scythe_decent"
-      ]
+      "id": "sickle_cracked",
+      "multiplier": 1
     }
   },
   "equipped_tools": {
-    "watering_can": "watering_can_better",
-    "scythe": "scythe_decent"
+    "watering_can": "watering_can_rusted",
+    "scythe": "sickle_cracked"
   },
   "date": {
     "year": 2025,
-    "month": 10,
-    "day": 10
+    "month": 3,
+    "day": 1
   },
-  "player_money": 99160100,
+  "player_money": 10000,
   "volume": {
     "master": 1,
     "music": 1,
@@ -83,19 +75,19 @@
       "final_scale_factor": 1.0
     },
     {
-      "planted_plant_type": "dragonfruit",
-      "current_growth_frame": 100,
-      "final_scale_factor": 0.9055141776628326
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
     },
     {
-      "planted_plant_type": "dragonfruit",
-      "current_growth_frame": 100,
-      "final_scale_factor": 1.0620043612038488
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
     },
     {
-      "planted_plant_type": "dragonfruit",
-      "current_growth_frame": 100,
-      "final_scale_factor": 0.9090747732665829
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
     },
     {
       "planted_plant_type": null,

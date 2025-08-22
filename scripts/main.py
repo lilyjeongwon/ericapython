@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 
 ## --- 애니메이션 및 선택 변수 ---
 seed_animation_current_offset = 0.0
 seed_animation_speed = 4.0 # 애니메이션 속도 증가
 selected_seed_name = None # 선택된 씨앗의 이름을 저장 (예: "sunflower")
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 from pathlib import Path
 import json
 import pygame
@@ -13,13 +16,21 @@ import math
 import time
 import atexit
 
+<<<<<<< HEAD
 # 튜토리얼 스킵 변수
+=======
+# 튜토리얼 스킵 관련 변수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 skip_tutorial = False
 skip_e_pressed = False
 skip_e_start_time = 0
 skip_e_duration = 1.0  # 1초
 
+<<<<<<< HEAD
 # 튜토리얼 스킵 UI 원 그리기
+=======
+# 튜토리얼 스킵 UI 원 그리기 함수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 def draw_skip_circle(screen, progress):
     x, y = screen.get_width() - 32, screen.get_height() - 32
     radius = 22
@@ -48,15 +59,25 @@ def draw_skip_circle(screen, progress):
     # arc_surface를 화면에 합성
     screen.blit(arc_surface, (x - radius - thickness//2, y - radius - thickness//2))
 
+<<<<<<< HEAD
 # --- 기본 경로 설정 ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+=======
+# --- 상대 경로를 위한 기본 경로 설정 ---
+# 이 스크립트 파일이 위치한 디렉터리를 기준으로 경로를 설정합니다.
+BASE_DIR = Path(__file__).resolve().parent.parent
+# 예: "C:\Users\user\Project"
+# 이렇게 하면 다른 컴퓨터로 프로젝트 폴더를 옮겨도 항상 올바른 경로를 찾습니다.
+# ----------------------------------------
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 # 설정 파일 경로
 SETTINGS_FILE = BASE_DIR / "settings.json"
 
 # 기본 설정
 DEFAULT_SETTINGS = {
+<<<<<<< HEAD
     "volume": 1,  # 기본 볼륨 (50%)
     "master_volume": 1,
     "music_volume": 1,
@@ -70,17 +91,30 @@ def save_settings(settings):
         settings["master_volume"] = master_volume
         settings["music_volume"] = music_volume
         settings["sfx_volume"] = sfx_volume
+=======
+    "volume": 1  # 기본 볼륨 (50%)
+}
+
+# 설정 저장 함수
+def save_settings(settings):
+    try:
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         with open(SETTINGS_FILE, "w") as f:
             json.dump(settings, f, indent=4)
         print("설정이 저장되었습니다.")
     except Exception as e:
         print(f"설정 저장 중 오류 발생: {e}")
 
+<<<<<<< HEAD
 # 설정 로드
+=======
+# 설정 로드 함수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 def load_settings():
     if SETTINGS_FILE.exists():
         try:
             with open(SETTINGS_FILE, "r") as f:
+<<<<<<< HEAD
                 loaded = json.load(f)
                 # 누락된 키는 기본값으로 채움
                 for k, v in DEFAULT_SETTINGS.items():
@@ -93,11 +127,18 @@ def load_settings():
                 if "sfx_volume" not in loaded:
                     loaded["sfx_volume"] = 1
                 return loaded
+=======
+                return json.load(f)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         except Exception as e:
             print(f"설정 로드 중 오류 발생: {e}")
     return DEFAULT_SETTINGS.copy()
 
+<<<<<<< HEAD
 # 설정 적용
+=======
+# 설정 로드
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 settings = load_settings()
 
 # Pygame 초기화
@@ -106,6 +147,7 @@ pygame.mixer.init()
 # 볼륨 설정
 pygame.mixer.music.set_volume(settings["volume"])
 
+<<<<<<< HEAD
 # 종료 시 설정 저장
 def on_exit():
     save_settings(settings)
@@ -121,14 +163,76 @@ def set_volume(new_volume):
     save_settings(settings)
 
 
+=======
+# 게임 종료 시 설정 저장
+def on_exit():
+    save_settings(settings)
+
+# 볼륨 변경 예시
+def set_volume(new_volume):
+    settings["volume"] = max(0.0, min(1.0, new_volume))  # 0.0 ~ 1.0 범위로 제한
+    pygame.mixer.music.set_volume(settings["volume"])
+    print(f"볼륨이 {settings['volume'] * 100:.0f}%로 설정되었습니다.")
+
+# 게임 종료 시 호출
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 atexit.register(on_exit)
 # Pygame 초기화
 pygame.init()
 pygame.mixer.init()
 
+<<<<<<< HEAD
 # 화면 설정
 WIDTH, HEIGHT = 1100, 720
+=======
+# 화면 크기 감지 및 반응형 설정
+def get_screen_info():
+    """현재 화면 크기를 감지하고 적절한 게임 화면 크기를 결정합니다."""
+    # 사용 가능한 화면 정보 가져오기
+    info = pygame.display.Info()
+    screen_width = info.current_w
+    screen_height = info.current_h
+    
+    print(f"감지된 화면 크기: {screen_width}x{screen_height}")
+    
+    # 기본 게임 크기 (1100x720)
+    BASE_WIDTH = 1100
+    BASE_HEIGHT = 720
+    
+    # 화면 크기에 따른 스케일 팩터 계산
+    scale_x = screen_width / BASE_WIDTH
+    scale_y = screen_height / BASE_HEIGHT
+    scale_factor = min(scale_x, scale_y, 1.5)  # 최대 1.5배까지만 확대
+    
+    # 실제 게임 화면 크기 계산
+    game_width = int(BASE_WIDTH * scale_factor)
+    game_height = int(BASE_HEIGHT * scale_factor)
+    
+    print(f"계산된 스케일 팩터: {scale_factor}")
+    print(f"게임 화면 크기: {game_width}x{game_height}")
+    
+    return game_width, game_height, scale_factor
+
+# 화면 크기 및 스케일 팩터 설정
+WIDTH, HEIGHT, SCALE_FACTOR = get_screen_info()
+
+# 반응형 크기 계산 함수들
+def scale_size(base_size):
+    """기본 크기를 현재 화면에 맞게 조정합니다."""
+    return int(base_size * SCALE_FACTOR)
+
+def scale_rect(base_rect):
+    """기본 Rect를 현재 화면에 맞게 조정합니다."""
+    return pygame.Rect(
+        int(base_rect.x * SCALE_FACTOR),
+        int(base_rect.y * SCALE_FACTOR),
+        int(base_rect.width * SCALE_FACTOR),
+        int(base_rect.height * SCALE_FACTOR)
+    )
+
+# 화면 설정
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("농장 시뮬레이터") # 캡션 변경
 
@@ -151,6 +255,46 @@ TAB_ACTIVE_COLOR = (70, 70, 70) # 탭 활성화 색상
 # 메인 화면 영역
 middle_rect = pygame.Rect(0, 0, WIDTH, HEIGHT)
 
+<<<<<<< HEAD
+=======
+# 반응형 크기 상수들
+BASE_TOOL_ICON_SIZE = 100
+BASE_SETTINGS_ICON_SIZE = 50
+BASE_ITEM_SIZE = 80
+BASE_PLOT_BORDER_THICKNESS = 4
+BASE_TOOL_BORDER_THICKNESS = 4
+BASE_PLUS_SIGN_SIZE = 30
+BASE_SHOP_ITEM_IMAGE_SIZE = 60
+
+TOOL_ICON_SIZE = scale_size(BASE_TOOL_ICON_SIZE)
+SETTINGS_ICON_SIZE = scale_size(BASE_SETTINGS_ICON_SIZE)
+ITEM_SIZE = scale_size(BASE_ITEM_SIZE)
+PLOT_BORDER_THICKNESS = scale_size(BASE_PLOT_BORDER_THICKNESS)
+TOOL_BORDER_THICKNESS = scale_size(BASE_TOOL_BORDER_THICKNESS)
+PLUS_SIGN_SIZE = scale_size(BASE_PLUS_SIGN_SIZE)
+SHOP_ITEM_IMAGE_SIZE = scale_size(BASE_SHOP_ITEM_IMAGE_SIZE)
+
+# 반응형 간격 설정
+BASE_TOOL_SPACING = 20
+BASE_ITEM_GAP_X = 20
+BASE_ITEM_GAP_Y = 20
+BASE_TOOL_ICON_MARGIN = 20
+
+TOOL_SPACING = scale_size(BASE_TOOL_SPACING)
+ITEM_GAP_X = scale_size(BASE_ITEM_GAP_X)
+ITEM_GAP_Y = scale_size(BASE_ITEM_GAP_Y)
+TOOL_ICON_MARGIN = scale_size(BASE_TOOL_ICON_MARGIN)
+
+# 반응형 위치 설정
+BASE_FIELD_START_X = 140
+BASE_FIELD_START_Y = 100
+BASE_GLOBAL_X_OFFSET = 0
+
+FIELD_START_X = scale_size(BASE_FIELD_START_X)
+FIELD_START_Y = scale_size(BASE_FIELD_START_Y)
+GLOBAL_X_OFFSET = scale_size(BASE_GLOBAL_X_OFFSET)
+
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 image_names = ["a.png"]
 images = []
 for name in image_names:
@@ -175,7 +319,10 @@ except pygame.error as e:
 
 settings_icon = None
 settings_icon_path = BASE_DIR / "assets" / "images" / "settings_icon.png"
+<<<<<<< HEAD
 SETTINGS_ICON_SIZE = 50
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 try:
     settings_icon = pygame.image.load(settings_icon_path)
     settings_icon = pygame.transform.scale(settings_icon, (SETTINGS_ICON_SIZE, SETTINGS_ICON_SIZE))
@@ -214,7 +361,11 @@ except pygame.error as e:
     print(f"씨앗 선택 버튼 이미지 로드 오류 {seed_select_button_path}: {e}")
     print("씨앗 선택 버튼 이미지 파일이 'assets/images' 폴더에 있는지 확인하세요.")
 
+<<<<<<< HEAD
 # 씨앗 이미지 로드
+=======
+# 개별 씨앗 이미지 로드 및 크기 설정 (파일 이름 변경 반영)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 seed_sunflower_image = None
 seed_lettuce_image = None
 seed_potato_image = None
@@ -236,21 +387,33 @@ except pygame.error as e:
     print(f"씨앗 이미지 로드 오류: {e}")
     print("모든 씨앗 이미지 파일이 'assets/images' 폴더에 있는지 확인하세요. (예: seed_sunflower.png)")
 
+<<<<<<< HEAD
 # 씨앗 이름
+=======
+# 씨앗 이름 (변수명 그대로 유지, 파일 이름과 구분)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 seed_sunflower_name = "해바라기 씨앗"
 seed_lettuce_name = "상추 씨앗"
 seed_potato_name = "감자 씨앗"
 seed_pea_name = "완두콩 씨앗"
 seed_dragonfruit_name = "용과 씨앗"
 
+<<<<<<< HEAD
 # 식물 성장 프레임
+=======
+# 식물 성장 프레임 정의 (각 씨앗별 도달해야 하는 총 성장 프레임 수)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 plant_sunflower_growth_frames = 30
 plant_lettuce_growth_frames = 35
 plant_potato_growth_frames = 45
 plant_pea_growth_frames = 60
 plant_dragonfruit_growth_frames = 100
 
+<<<<<<< HEAD
 # 식물 이미지 로드
+=======
+# 식물 이미지 로드 (파일 이름 변경 반영)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 # 이제 여기에 로드되는 이미지는 "원본" 즉, 완전히 자란 상태의 풀 사이즈 이미지입니다.
 plant_sunflower_image_original = None
 plant_lettuce_image_original = None
@@ -268,7 +431,11 @@ except pygame.error as e:
     print(f"식물 이미지 로드 오류: {e}")
     print(f"경고: 식물 이미지 파일이 'assets/images' 폴더에 있는지 확인하세요. (예: plant_sunflower.png)")
 
+<<<<<<< HEAD
 # 식물 정보 딕셔너리
+=======
+# 식물 정보를 딕셔너리로 관리하여 인덱스 대신 이름으로 접근할 수 있도록 함 (변수명 그대로 유지)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 PLANT_INFO = {
     "sunflower": {
         "seed_image": seed_sunflower_image,
@@ -302,7 +469,11 @@ PLANT_INFO = {
     },
 }
 
+<<<<<<< HEAD
 # + 모양 이미지 로드
+=======
+# + 모양 이미지 로드 및 크기 설정
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 plus_sign_image = None
 PLUS_SIGN_SIZE = 40 # Adjust this value to change the size of the plus sign
 try:
@@ -322,7 +493,11 @@ music_files = [
     BASE_DIR / "assets" / "sounds" / "bgm3.mp3", # 'music'을 'sounds'로 변경
 ]
 
+<<<<<<< HEAD
 # 효과음 파일 경로
+=======
+# 효과음 파일 경로 (MP3로 변경)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 scythe_harvest_sound = None
 scythe_harvest_sound_path = BASE_DIR / "assets" / "sounds" / "harvest.mp3" # harvest.mp3로 변경
 try:
@@ -351,7 +526,11 @@ except pygame.error as e:
 total_days_passed = 0
 
 def save_game(filename="save_data.json"):
+<<<<<<< HEAD
     # 게임 데이터 저장
+=======
+    # 저장할 데이터 구조 확장: 소유/장착 장비, 날짜, 돈, 볼륨, 밭/화분 상태
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     data = {
         "player_inventory": player_inventory,
         "player_tools": player_tools,
@@ -387,7 +566,11 @@ def save_game(filename="save_data.json"):
     }
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+<<<<<<< HEAD
     # 볼륨 설정 저장
+=======
+    # 볼륨 설정도 별도 settings.json에 저장
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     save_settings(settings)
 
 def load_game(filename="save_data.json"):
@@ -400,7 +583,11 @@ def load_game(filename="save_data.json"):
             eq = data.get("equipped_tools", {})
             if "watering_can" in eq:
                 player_tools["watering_can"]["id"] = eq["watering_can"]
+<<<<<<< HEAD
                 # 이어하기 시 물뿌리개/낫 이미지 업데이트
+=======
+                # 이어하기 시 물뿌리개 이미지 업데이트
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
                 for t in tool_shop_items["watering_can"]:
                     if t["id"] == eq["watering_can"]:
                         global watering_can_image
@@ -493,6 +680,7 @@ DAY_CHANGE_INTERVAL = 10
 last_day_change_time = time.time()
 fast_growth_mode = False # F1 키로 토글될 빠른 성장 모드
 
+<<<<<<< HEAD
 # 폰트 설정
 font_name = "Galmuri14.ttf" # 사용하려는 폰트 파일 이름으로 변경하세요 (예: NanumGothicCoding.ttf)
 font_path = BASE_DIR / "assets" / "fonts" / font_name # 'assets/fonts/' 폴더에 폰트를 넣었을 경우
@@ -512,11 +700,65 @@ try:
     tool_shop_title_font = pygame.font.Font(font_path, 25) # 제작대 -> 도구상점 폰트 변경
     tool_shop_pirce_font = pygame.font.Font(font_path, 25) # 도구 상점 가격 폰트
     description_font = pygame.font.Font(font_path, 18) # 새로 추가된 설명 폰트
+=======
+# 폰트 설정 (반응형)
+font_name = "Galmuri14.ttf" # 사용하려는 폰트 파일 이름으로 변경하세요 (예: NanumGothicCoding.ttf)
+font_path = BASE_DIR / "assets" / "fonts" / font_name # 'assets/fonts/' 폴더에 폰트를 넣었을 경우
+
+# 반응형 폰트 크기 설정
+BASE_FONT_SIZE = 30
+BASE_PRICE_TEXT_FONT_SIZE = 25
+BASE_MULTIPLIER_TEXT_FONT_SIZE = 20
+BASE_TITLE_FONT_SIZE = 70
+BASE_INGAME_BUTTON_FONT_SIZE = 25
+BASE_BUTTON_FONT_SIZE = 35
+BASE_SETTINGS_TITLE_FONT_SIZE = 50
+BASE_VOLUME_LABEL_FONT_SIZE = 30
+BASE_SHOP_TITLE_FONT_SIZE = 50
+BASE_SEED_NAME_FONT_SIZE = 20
+BASE_COOLDOWN_FONT_SIZE = 40
+BASE_TOOL_SHOP_TITLE_FONT_SIZE = 25
+BASE_TOOL_SHOP_PRICE_FONT_SIZE = 25
+BASE_DESCRIPTION_FONT_SIZE = 18
+
+# 스케일된 폰트 크기 계산
+FONT_SIZE = scale_size(BASE_FONT_SIZE)
+PRICE_TEXT_FONT_SIZE = scale_size(BASE_PRICE_TEXT_FONT_SIZE)
+MULTIPLIER_TEXT_FONT_SIZE = scale_size(BASE_MULTIPLIER_TEXT_FONT_SIZE)
+TITLE_FONT_SIZE = scale_size(BASE_TITLE_FONT_SIZE)
+INGAME_BUTTON_FONT_SIZE = scale_size(BASE_INGAME_BUTTON_FONT_SIZE)
+BUTTON_FONT_SIZE = scale_size(BASE_BUTTON_FONT_SIZE)
+SETTINGS_TITLE_FONT_SIZE = scale_size(BASE_SETTINGS_TITLE_FONT_SIZE)
+VOLUME_LABEL_FONT_SIZE = scale_size(BASE_VOLUME_LABEL_FONT_SIZE)
+SHOP_TITLE_FONT_SIZE = scale_size(BASE_SHOP_TITLE_FONT_SIZE)
+SEED_NAME_FONT_SIZE = scale_size(BASE_SEED_NAME_FONT_SIZE)
+COOLDOWN_FONT_SIZE = scale_size(BASE_COOLDOWN_FONT_SIZE)
+TOOL_SHOP_TITLE_FONT_SIZE = scale_size(BASE_TOOL_SHOP_TITLE_FONT_SIZE)
+TOOL_SHOP_PRICE_FONT_SIZE = scale_size(BASE_TOOL_SHOP_PRICE_FONT_SIZE)
+DESCRIPTION_FONT_SIZE = scale_size(BASE_DESCRIPTION_FONT_SIZE)
+
+try:
+    font = pygame.font.Font(font_path, FONT_SIZE)
+    price_text_font = pygame.font.Font(font_path, PRICE_TEXT_FONT_SIZE) # 가격 텍스트 폰트
+    multiplier_text_font = pygame.font.Font(font_path, MULTIPLIER_TEXT_FONT_SIZE) # 배율 텍스트 폰트
+    title_font = pygame.font.Font(font_path, TITLE_FONT_SIZE)
+    ingame_button_font = pygame.font.Font(font_path, INGAME_BUTTON_FONT_SIZE) #버튼 폰트
+    button_font = pygame.font.Font(font_path, BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.Font(font_path, SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.Font(font_path, VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.Font(font_path, SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.Font(font_path, SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.Font(font_path, COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.Font(font_path, TOOL_SHOP_TITLE_FONT_SIZE) # 제작대 -> 도구상점 폰트 변경
+    tool_shop_pirce_font = pygame.font.Font(font_path, TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.Font(font_path, DESCRIPTION_FONT_SIZE) # 새로 추가된 설명 폰트
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 except FileNotFoundError:
     print(f"오류: 폰트 파일을 찾을 수 없습니다. 경로를 확인하세요: {font_path}")
     print("시스템에 맑은 고딕이 없거나, 다른 OS를 사용한다면 적절한 한글 폰트 경로로 변경하거나,")
     print("프로젝트 폴더에 .ttf 폰트 파일을 넣고 그 경로를 사용해 주세요.")
     # 폰트 파일을 찾을 수 없을 때 대체 폰트 사용 (한글 폰트가 지원되는 시스템 폰트)
+<<<<<<< HEAD
     font = pygame.font.SysFont('malgungothic', 30)
     price_text_font = pygame.font.SysFont('malgungothic', 25) # 가격 텍스트 폰트
     multiplier_text_font = pygame.font.SysFont('malgungothic', 20) # 배율 텍스트 폰트
@@ -544,6 +786,35 @@ except Exception as e:
     tool_shop_title_font = pygame.font.SysFont('malgungothic', 50) # 대체 폰트도 함께 설정
     tool_shop_pirce_font = pygame.font.SysFont('malgungothic', 20) # 도구 상점 가격 폰트
     description_font = pygame.font.SysFont('malgungothic', 18) # 대체 폰트도 함께 설정
+=======
+    font = pygame.font.SysFont('malgungothic', FONT_SIZE)
+    price_text_font = pygame.font.SysFont('malgungothic', PRICE_TEXT_FONT_SIZE) # 가격 텍스트 폰트
+    multiplier_text_font = pygame.font.SysFont('malgungothic', MULTIPLIER_TEXT_FONT_SIZE) # 배율 텍스트 폰트
+    title_font = pygame.font.SysFont('malgungothic', TITLE_FONT_SIZE)
+    button_font = pygame.font.SysFont('malgungothic', BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.SysFont('malgungothic', SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.SysFont('malgungothic', VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.SysFont('malgungothic', SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.SysFont('malgungothic', SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.SysFont('malgungothic', COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_TITLE_FONT_SIZE) # 대체 폰트도 함께 설정
+    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.SysFont('malgungothic', DESCRIPTION_FONT_SIZE) # 대체 폰트도 함께 설정
+except Exception as e:
+    print(f"폰트 로드 중 알 수 없는 오류 발생: {e}")
+    # 다른 오류 발생 시 시스템 폰트 사용
+    font = pygame.font.SysFont('malgungothic', FONT_SIZE)
+    title_font = pygame.font.SysFont('malgungothic', TITLE_FONT_SIZE)
+    button_font = pygame.font.SysFont('malgungothic', BUTTON_FONT_SIZE)
+    settings_title_font = pygame.font.SysFont('malgungothic', SETTINGS_TITLE_FONT_SIZE)
+    volume_label_font = pygame.font.SysFont('malgungothic', VOLUME_LABEL_FONT_SIZE)
+    shop_title_font = pygame.font.SysFont('malgungothic', SHOP_TITLE_FONT_SIZE)
+    seed_name_font = pygame.font.SysFont('malgungothic', SEED_NAME_FONT_SIZE)
+    cooldown_font = pygame.font.SysFont('malgungothic', COOLDOWN_FONT_SIZE)
+    tool_shop_title_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_TITLE_FONT_SIZE) # 대체 폰트도 함께 설정
+    tool_shop_pirce_font = pygame.font.SysFont('malgungothic', TOOL_SHOP_PRICE_FONT_SIZE) # 도구 상점 가격 폰트
+    description_font = pygame.font.SysFont('malgungothic', DESCRIPTION_FONT_SIZE) # 대체 폰트도 함께 설정
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 # --- 사운드 볼륨 변수 및 초기 설정 ---
 master_volume = 1
@@ -603,9 +874,25 @@ show_tutorial = False  # 튜토리얼 오버레이 상태
 # 튜토리얼 단계 관리 변수 추가
 tutorial_step = 1  # 1: 씨앗 목록 버튼 클릭 안내, 2: 씨앗1(해바라기) 클릭 안내
 
+<<<<<<< HEAD
 # 시작 버튼 설정
 start_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 50, 200, 70)  # 처음부터 버튼
 continue_button_rect = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 + 140, 200, 70)  # 이어하기 버튼
+=======
+# 시작 버튼 설정 (반응형)
+BASE_BUTTON_WIDTH = 200
+BASE_BUTTON_HEIGHT = 70
+BASE_BUTTON_OFFSET_Y = 50
+BASE_BUTTON_SPACING = 90
+
+BUTTON_WIDTH = scale_size(BASE_BUTTON_WIDTH)
+BUTTON_HEIGHT = scale_size(BASE_BUTTON_HEIGHT)
+BUTTON_OFFSET_Y = scale_size(BASE_BUTTON_OFFSET_Y)
+BUTTON_SPACING = scale_size(BASE_BUTTON_SPACING)
+
+start_button_rect = pygame.Rect(WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + BUTTON_OFFSET_Y, BUTTON_WIDTH, BUTTON_HEIGHT)  # 처음부터 버튼
+continue_button_rect = pygame.Rect(WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + BUTTON_OFFSET_Y + BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT)  # 이어하기 버튼
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 def play_random_music():
     global is_music_paused_by_code
@@ -630,6 +917,7 @@ def play_random_music():
 MUSIC_END_EVENT = pygame.USEREVENT + 1
 pygame.mixer.music.set_endevent(MUSIC_END_EVENT)
 
+<<<<<<< HEAD
 # --- 설정 화면 관련 변수 ---
 
 settings_panel_rect = pygame.Rect(WIDTH // 2 - 200, HEIGHT // 2 - 250, 400, 500)
@@ -648,6 +936,29 @@ except Exception:
     master_volume = 1
     music_volume = 1
     sfx_volume = 1
+=======
+# --- 설정 화면 관련 변수 (반응형) ---
+BASE_SETTINGS_PANEL_WIDTH = 400
+BASE_SETTINGS_PANEL_HEIGHT = 500
+BASE_SETTINGS_PANEL_OFFSET_X = 200
+BASE_SETTINGS_PANEL_OFFSET_Y = 250
+
+SETTINGS_PANEL_WIDTH = scale_size(BASE_SETTINGS_PANEL_WIDTH)
+SETTINGS_PANEL_HEIGHT = scale_size(BASE_SETTINGS_PANEL_HEIGHT)
+SETTINGS_PANEL_OFFSET_X = scale_size(BASE_SETTINGS_PANEL_OFFSET_X)
+SETTINGS_PANEL_OFFSET_Y = scale_size(BASE_SETTINGS_PANEL_OFFSET_Y)
+
+settings_panel_rect = pygame.Rect(WIDTH // 2 - SETTINGS_PANEL_OFFSET_X, HEIGHT // 2 - SETTINGS_PANEL_OFFSET_Y, SETTINGS_PANEL_WIDTH, SETTINGS_PANEL_HEIGHT)
+close_button_rect = pygame.Rect(settings_panel_rect.right - scale_size(40), settings_panel_rect.top + scale_size(10), scale_size(30), scale_size(30)) # 설정 닫기 버튼 기준
+
+BASE_SLIDER_WIDTH = 250
+BASE_SLIDER_HEIGHT = 10
+BASE_KNOB_RADIUS = 15
+
+SLIDER_WIDTH = scale_size(BASE_SLIDER_WIDTH)
+SLIDER_HEIGHT = scale_size(BASE_SLIDER_HEIGHT)
+KNOB_RADIUS = scale_size(BASE_KNOB_RADIUS)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 master_vol_slider_x = settings_panel_rect.centerx - SLIDER_WIDTH // 2
 master_vol_slider_y = settings_panel_rect.top + 150
@@ -674,6 +985,7 @@ is_dragging_music_vol = False
 is_dragging_sfx_vol = False # 효과음 볼륨 드래그 상태 변수
 # --- 여기까지 설정 화면 관련 변수 ---
 
+<<<<<<< HEAD
 # --- 상점 및 도구 상점 버튼 관련 변수 ---
 BUTTON_WIDTH = 120
 BUTTON_HEIGHT = 60
@@ -690,11 +1002,35 @@ tool_shop_button_rect = pygame.Rect(WIDTH - BUTTON_WIDTH - BUTTON_MARGIN,
 # 상점 스크롤 관련 변수 (다른 전역 변수들 아래에 추가)
 shop_scroll_offset = 0 # 현재 스크롤 위치. 음수 값은 아래로 스크롤되었음을 의미
 SHOP_SCROLL_SPEED = 30 # 마우스 휠 스크롤 속도
+=======
+# --- 상점 및 도구 상점 버튼 관련 변수 (반응형) ---
+BASE_SHOP_BUTTON_WIDTH = 120
+BASE_SHOP_BUTTON_HEIGHT = 60
+BASE_SHOP_BUTTON_MARGIN = 10
+
+SHOP_BUTTON_WIDTH = scale_size(BASE_SHOP_BUTTON_WIDTH)
+SHOP_BUTTON_HEIGHT = scale_size(BASE_SHOP_BUTTON_HEIGHT)
+SHOP_BUTTON_MARGIN = scale_size(BASE_SHOP_BUTTON_MARGIN)
+
+shop_button_rect = pygame.Rect(WIDTH - SHOP_BUTTON_WIDTH - SHOP_BUTTON_MARGIN,
+                               HEIGHT // 2 - SHOP_BUTTON_HEIGHT - SHOP_BUTTON_MARGIN // 2,
+                               SHOP_BUTTON_WIDTH, SHOP_BUTTON_HEIGHT)
+
+tool_shop_button_rect = pygame.Rect(WIDTH - SHOP_BUTTON_WIDTH - SHOP_BUTTON_MARGIN,
+                               shop_button_rect.bottom + SHOP_BUTTON_MARGIN,
+                               SHOP_BUTTON_WIDTH, SHOP_BUTTON_HEIGHT)
+
+# 상점 스크롤 관련 변수 (반응형)
+shop_scroll_offset = 0 # 현재 스크롤 위치. 음수 값은 아래로 스크롤되었음을 의미
+BASE_SHOP_SCROLL_SPEED = 30 # 마우스 휠 스크롤 속도
+SHOP_SCROLL_SPEED = scale_size(BASE_SHOP_SCROLL_SPEED)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 is_dragging_scrollbar = False # 스크롤바 핸들 드래그 중인지 여부
 scrollbar_drag_offset_y = 0 # 스크롤바 핸들 드래그 시작 시 마우스와 핸들의 상대 위치
 scrollbar_rect = None # 스크롤바 전체 영역 (매 프레임 업데이트될 수 있음)
 scrollbar_handle_rect = None # 스크롤바 핸들 영역 (매 프레임 업데이트될 수 있음)
 
+<<<<<<< HEAD
 # 상점 패널 크기 및 위치 조정
 SHOP_PANEL_WIDTH = 1000 # 가로 길이 더 늘림
 SHOP_PANEL_HEIGHT = 600
@@ -703,6 +1039,19 @@ shop_panel_rect = pygame.Rect(WIDTH // 2 - SHOP_PANEL_WIDTH // 2, HEIGHT // 2 - 
 # 도구 상점 패널 (상점과 동일한 크기 및 위치)
 TOOL_SHOP_PANEL_WIDTH = 1000
 TOOL_SHOP_PANEL_HEIGHT = 600
+=======
+# 상점 패널 크기 및 위치 조정 (반응형)
+BASE_SHOP_PANEL_WIDTH = 1000 # 가로 길이 더 늘림
+BASE_SHOP_PANEL_HEIGHT = 600
+
+SHOP_PANEL_WIDTH = scale_size(BASE_SHOP_PANEL_WIDTH)
+SHOP_PANEL_HEIGHT = scale_size(BASE_SHOP_PANEL_HEIGHT)
+shop_panel_rect = pygame.Rect(WIDTH // 2 - SHOP_PANEL_WIDTH // 2, HEIGHT // 2 - SHOP_PANEL_HEIGHT // 2, SHOP_PANEL_WIDTH, SHOP_PANEL_HEIGHT)
+
+# 도구 상점 패널 (상점과 동일한 크기 및 위치)
+TOOL_SHOP_PANEL_WIDTH = SHOP_PANEL_WIDTH
+TOOL_SHOP_PANEL_HEIGHT = SHOP_PANEL_HEIGHT
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 tool_shop_panel_rect = pygame.Rect(WIDTH // 2 - TOOL_SHOP_PANEL_WIDTH // 2, HEIGHT // 2 - TOOL_SHOP_PANEL_HEIGHT // 2, TOOL_SHOP_PANEL_WIDTH, TOOL_SHOP_PANEL_HEIGHT)
 
 
@@ -732,6 +1081,7 @@ last_watering_can_use_time = 0
 show_seed_options = False
 is_seed_animating = False
 seed_animation_target_offset = 0.0
+<<<<<<< HEAD
 
 
 # --- 인벤토리 ---
@@ -760,6 +1110,32 @@ player_tools = {
 
 # --- 상점 아이템 데이터 ---
 # 씨앗 상점 아이템
+=======
+seed_animation_current_offset = 0.0
+seed_animation_speed = 4.0 # 애니메이션 속도 증가
+
+selected_seed_name = None # 선택된 씨앗의 이름을 저장 (예: "sunflower")
+
+# --- 인벤토리 ---
+# 씨앗 이름 (예: "sunflower") -> 수량
+player_inventory = {
+    "sunflower": 5,
+    "lettuce": 5,
+    "potato": 5,
+    "pea": 5,
+    "dragonfruit": 5
+} # 초기 소지 씨앗
+
+# 플레이어가 현재 소지한 도구 정보 (ID, 배율)
+player_tools = {
+    'watering_can': {'id': 'watering_can_rusted', 'multiplier': 1, 'owned_tool_ids': []},
+    'scythe': {'id': 'sickle_cracked', 'multiplier': 1, 'owned_tool_ids': []} # 낫은 기본 배율 1로 시작
+}
+
+
+# --- 상점 아이템 데이터 (판매할 씨앗 정보) ---
+# 가격은 임의로 설정합니다. 실제 게임에 맞춰 조정하세요.
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 shop_items = [
     {"plant_type": "sunflower", "name": PLANT_INFO["sunflower"]["seed_name"], "price": 2000, "image": PLANT_INFO["sunflower"]["seed_image"], "description": "해바라기가 만개를 하면 팔 수 있지않을까?"},
     {"plant_type": "lettuce", "name": PLANT_INFO["lettuce"]["seed_name"], "price": 16000, "image": PLANT_INFO["lettuce"]["seed_image"], "description": "꽤 쓸만한 작물일거 같다 1000개를 채집하면 30,000,000?"},
@@ -768,7 +1144,11 @@ shop_items = [
     {"plant_type": "dragonfruit", "name": PLANT_INFO["dragonfruit"]["seed_name"], "price": 5000000, "image": PLANT_INFO["dragonfruit"]["seed_image"], "description": "비싸지만 값어치는 하는 것 같다."},
 ]
 
+<<<<<<< HEAD
 # 상점 아이템 이미지 크기
+=======
+# 파일 상단이나, load_tool_image 함수 호출 전에
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 SHOP_ITEM_IMAGE_SIZE = 128  # 원하는 이미지 크기로 설정 (예: 128x128 픽셀)
 
 def load_tool_image(image_name):
@@ -780,8 +1160,13 @@ def load_tool_image(image_name):
     img = pygame.image.load(image_path).convert_alpha()
     return pygame.transform.scale(img, (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
 
+<<<<<<< HEAD
 # --- 도구 상점 아이템 데이터 ---
 # 도구 이미지 로드 함수
+=======
+# --- 도구 상점 아이템 데이터 (물뿌리개와 낫) ---
+# 이미지 로드를 위한 헬퍼 함수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 def load_tool_image(filename):
     # 수정된 부분: BASE_DIR을 사용하여 경로 생성
     path = BASE_DIR / "assets" / "images" / filename
@@ -804,6 +1189,7 @@ tool_shop_items = {
         {"id": "watering_can_legendary", "name": "전설의 물뿌리개", "price": 100000000, "multiplier": 64, "description": "전설 속에서만 전해지던 물뿌리개입니다. 전체 밭에 영향을 줍니다.", "image": load_tool_image("watering_can_tier6.png")},
     ],
     "scythe": [
+<<<<<<< HEAD
         {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("sickle_cracked.png")if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0,
         {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier1.png")},
         {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier2.png")},
@@ -822,18 +1208,47 @@ SHOP_SCROLL_SPEED = 20 # 한 번 스크롤할 때 이동할 픽셀 수
 shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
 
 # 도구 상점 스크롤 변수
+=======
+        {"id": "sickle_cracked", "name": "금이 간 낫", "price": 0, "multiplier": 1, "description": "금이가서 위태로워 보이는 낫입니다. 수확에 사용합니다.", "image": load_tool_image("sickle_cracked.png") if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0
+        {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("scythe_tier1.png")},
+        {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier2.png")},
+        {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier3.png")},
+        {"id": "scythe_improved", "name": "좋아진 낫", "price": 5000000, "multiplier": 2.5, "description": "수확 효율이 눈에 띄게 좋아진 낫입니다. 농가의 희망이죠.", "image": load_tool_image("scythe_tier4.png")},
+        {"id": "scythe_abandoned_master", "name": "장인이 쓰다 버린 낫", "price": 20000000, "multiplier": 4, "description": "장인이 더 이상 사용하지 않아 버려진 낫입니다. 엄청난 힘이 숨겨져 있습니다.", "image": load_tool_image("scythe_tier5.png")},
+        {"id": "scythe_omniblade", "name": "모든걸 베어버릴것 같은 낫", "price": 100000000, "multiplier": 6, "description": "강력한 힘이 느껴지는 낫입니다. 베지 못할 것이 없습니다.", "image": load_tool_image("scythe_tier6.png")},
+        {"id": "scythe_legendary", "name": "전설의 낫", "price": 500000000, "multiplier": 10, "description": "전설 속에 등장하는 낫입니다. 모든 작물을 풍요롭게 만듭니다.", "image": load_tool_image("scythe_tier7.png")},
+    ]
+}
+
+# 상점 스크롤 관련 변수
+shop_scroll_offset = 0
+SHOP_SCROLL_SPEED = 20 # 한 번 스크롤할 때 이동할 픽셀 수
+
+# 상점 패널 내 아이템 목록 영역을 전역 변수로 선언 (이벤트 처리에서 사용하기 위함)
+shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
+
+# 도구 상점 스크롤 관련 변수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 tool_shop_scroll_offset = 0
 tool_shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
 selected_tool_category = "watering_can" # 기본적으로 물뿌리개 탭이 선택
 
+<<<<<<< HEAD
 # 상점 UI 레이아웃 변수
+=======
+# 상점 UI 레이아웃을 위한 변수
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 SHOP_ITEM_HEIGHT = 100
 SHOP_ITEM_PADDING = 10
 SHOP_ITEM_IMAGE_SIZE = 128  # 모든 상점 아이템 이미지 크기를 128x128로 통일
 SHOP_RIGHT_PANEL_WIDTH_RATIO = 0.35 # 오른쪽 패널이 전체 패널 너비에서 차지하는 비율
 # SHOP_RIGHT_PANEL_WIDTH는 SHOP_PANEL_WIDTH에 따라 동적으로 계산됩니다.
 
+<<<<<<< HEAD
 # 선택된 아이템 인덱스
+=======
+# 선택된 아이템 (상세 정보를 표시하기 위함)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 selected_shop_item_index = -1
 selected_tool_shop_item_index = -1
 
@@ -896,7 +1311,11 @@ class TemporaryMessageDisplay:
 
 active_temporary_messages = []
 
+<<<<<<< HEAD
 # 씨앗 선택 메뉴 옵션
+=======
+# 씨앗 선택 메뉴 옵션 (PLANT_INFO 딕셔너리를 사용하여 동적으로 생성)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 seed_options = []
 seed_index_map = [] # 옵션의 순서와 PLANT_INFO의 키를 매핑
 x_offset_multiplier = 0 # 씨앗 버튼 옆으로 나열될 때의 x 위치 계산에 사용
@@ -912,7 +1331,11 @@ for plant_type, info in PLANT_INFO.items():
 
 MAX_SEED_ANIMATION_DISTANCE = seed_options[0]['target_x'] - seed_options[0]['initial_x']
 
+<<<<<<< HEAD
 # --- 밭 및 화분 변수 ---
+=======
+# --- 밭(경작지) 및 화분 관련 변수 (사진과 동일하게 조정) ---
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 ITEM_SIZE = 80 # 밭과 화분의 가로세로 크기
 ITEM_GAP_X = 15
 ITEM_GAP_Y = 15
@@ -950,10 +1373,427 @@ for col in range(NUM_ITEMS_PER_ROW):
 hovered_plot_type = None
 hovered_plot_index = -1
 
+<<<<<<< HEAD
+=======
+# 작물별 가격 정보 (키는 식물 타입 문자열과 매칭)
+
+CROP_PRICES = {
+    "sunflower": {
+        "type": "fixed",
+        "quantity": 1,
+        "price_per_item": 100,
+        "name": "해바라기"
+    },
+    "lettuce": {
+        "type": "fixed",
+        "quantity": 1,
+        "price_per_item": 1500,
+        "name": "상추"
+    },
+    "potato": {
+        "type": "fixed",
+        "quantity": 1,
+        "price_per_item": 5000,
+        "name": "감자"
+    },
+    "pea": {
+        "type": "fixed",
+        "quantity": 1,
+        "price_per_item": 30000,
+        "name": "완두콩"
+    },
+    "dragonfruit": {
+        "type": "fixed",
+        "quantity": 1,
+        "price_per_item": 100000,
+        "name": "용과"
+    }
+}
+
+# --- 인벤토리 ---
+# 씨앗 이름 (예: "sunflower") -> 수량
+player_inventory = {
+    "sunflower": 5,
+    "lettuce": 5,
+    "potato": 5,
+    "pea": 5,
+    "dragonfruit": 5
+} # 초기 소지 씨앗
+
+# 플레이어가 현재 소지한 도구 정보 (ID, 배율)
+player_tools = {
+    'watering_can': {'id': 'watering_can_rusted', 'multiplier': 1},
+    'scythe': {'id': 'sickle_cracked', 'multiplier': 1} # 낫은 기본 배율 1로 시작
+}
+
+# --- 상점 아이템 데이터 (판매할 씨앗 정보) ---
+# 가격은 임의로 설정합니다. 실제 게임에 맞춰 조정하세요.
+shop_items = [
+    {"plant_type": "sunflower", "name": PLANT_INFO["sunflower"]["seed_name"], "price": 2000, "image": PLANT_INFO["sunflower"]["seed_image"], "description": "해바라기가 만개를 하면 팔 수 있지않을까?"},
+    {"plant_type": "lettuce", "name": PLANT_INFO["lettuce"]["seed_name"], "price": 16000, "image": PLANT_INFO["lettuce"]["seed_image"], "description": "꽤 쓸만한 작물일거 같다 1000개를 채집하면 30,000,000?"},
+    {"plant_type": "potato", "name": PLANT_INFO["potato"]["seed_name"], "price": 25000, "image": PLANT_INFO["potato"]["seed_image"], "description": "감자는 '만'ㅎ을수록 좋다."},
+    {"plant_type": "pea", "name": PLANT_INFO["pea"]["seed_name"], "price": 200000, "image": PLANT_INFO["pea"]["seed_image"], "description": "신비한 힘이 깃든거 같다."},
+    {"plant_type": "dragonfruit", "name": PLANT_INFO["dragonfruit"]["seed_name"], "price": 5000000, "image": PLANT_INFO["dragonfruit"]["seed_image"], "description": "비싸지만 값어치는 하는 것 같다."},
+]
+
+# 파일 상단이나, load_tool_image 함수 호출 전에
+SHOP_ITEM_IMAGE_SIZE = 128  # 원하는 이미지 크기로 설정 (예: 128x128 픽셀)
+
+def load_tool_image(image_name):
+    # 수정된 부분: BASE_DIR을 사용하여 경로 생성
+    image_path = BASE_DIR / "assets" / "images" / image_name
+    if not image_path.exists():
+        # 기본 이미지 로드 또는 오류 처리
+        return None # 또는 적절한 기본 이미지
+    img = pygame.image.load(image_path).convert_alpha()
+    return pygame.transform.scale(img, (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
+
+# --- 도구 상점 아이템 데이터 (물뿌리개와 낫) ---
+# 이미지 로드를 위한 헬퍼 함수
+def load_tool_image(filename):
+    # 수정된 부분: BASE_DIR을 사용하여 경로 생성
+    path = BASE_DIR / "assets" / "images" / filename
+    try:
+        img = pygame.image.load(path)
+        return pygame.transform.scale(img, (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
+    except pygame.error as e:
+        print(f"도구 이미지 로드 오류 {path}: {e}")
+        # 이미지 로드 실패 시 기본 이미지 반환 또는 None 반환
+        return pygame.transform.scale(pygame.Surface((SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE)), (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE)) # 빈 Surface 반환
+
+tool_shop_items = {
+    "watering_can": [
+        {"id": "watering_can_rusted", "name": "녹슨 물뿌리개", "price": 0, "multiplier": 1, "description": "오래되어 녹이 슨 물뿌리개입니다. 물을 줍니다.", "image": load_tool_image("watering_can_rusted.png") if (BASE_DIR / "assets" / "images" / "watering_can_rusted.png").exists() else watering_can_image},
+        {"id": "watering_can_basic", "name": "기본 물뿌리개", "price": 50000, "multiplier": 2, "description": "기본적으로 제공되는 물뿌리개입니다. 물을 줍니다.", "image": load_tool_image("watering_can_tier1.png")},
+        {"id": "watering_can_good", "name": "조금 쓸만한 물뿌리개", "price": 200000, "multiplier": 4, "description": "조금 더 강력해진 물뿌리개입니다. 물을 더 많이 줍니다.", "image": load_tool_image("watering_can_tier2.png")},
+        {"id": "watering_can_better", "name": "좋아진 물뿌리개", "price": 1000000, "multiplier": 8, "description": "성능이 향상된 물뿌리개입니다. 작물 성장을 촉진합니다.", "image": load_tool_image("watering_can_tier3.png")},
+        {"id": "watering_can_powerful", "name": "강력해진 물뿌리개", "price": 5000000, "multiplier": 16, "description": "매우 강력한 물뿌리개입니다. 기적적인 성장을 가능케 합니다.", "image": load_tool_image("watering_can_tier4.png")},
+        {"id": "watering_can_masterpiece", "name": "장인이 만든 물뿌리개", "price": 20000000, "multiplier": 32, "description": "장인의 손길이 닿은 명품 물뿌리개입니다. 성장의 극치를 보여줍니다.", "image": load_tool_image("watering_can_tier5.png")},
+        {"id": "watering_can_legendary", "name": "전설의 물뿌리개", "price": 100000000, "multiplier": 64, "description": "전설 속에서만 전해지던 물뿌리개입니다. 전체 밭에 영향을 줍니다.", "image": load_tool_image("watering_can_tier6.png")},
+    ],
+    "scythe": [
+        {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("sickle_cracked.png")if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0,
+        {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier1.png")},
+        {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier2.png")},
+        {"id": "scythe_improved", "name": "좋아진 낫", "price": 5000000, "multiplier": 2.5, "description": "수확 효율이 눈에 띄게 좋아진 낫입니다. 농가의 희망이죠.", "image": load_tool_image("scythe_tier3.png")},
+        {"id": "scythe_abandoned_master", "name": "장인이 쓰다 버린 낫", "price": 20000000, "multiplier": 4, "description": "장인이 더 이상 사용하지 않아 버려진 낫입니다. 엄청난 힘이 숨겨져 있습니다.", "image": load_tool_image("scythe_tier4.png")},
+        {"id": "scythe_omniblade", "name": "모든걸 베어버릴것 같은 낫", "price": 100000000, "multiplier": 6, "description": "강력한 힘이 느껴지는 낫입니다. 베지 못할 것이 없습니다.", "image": load_tool_image("scythe_tier5.png")},
+        {"id": "scythe_legendary", "name": "전설의 낫", "price": 500000000, "multiplier": 10, "description": "전설 속에 등장하는 낫입니다. 모든 작물을 풍요롭게 만듭니다.", "image": load_tool_image("scythe_tier6.png")},
+    ]
+}
+
+# 상점 스크롤 관련 변수
+shop_scroll_offset = 0
+SHOP_SCROLL_SPEED = 20 # 한 번 스크롤할 때 이동할 픽셀 수
+
+# 상점 패널 내 아이템 목록 영역을 전역 변수로 선언 (이벤트 처리에서 사용하기 위함)
+shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
+
+# 도구 상점 스크롤 관련 변수
+tool_shop_scroll_offset = 0
+tool_shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
+selected_tool_category = "watering_can" # 기본적으로 물뿌리개 탭이 선택
+
+# 상점 UI 레이아웃을 위한 변수
+SHOP_ITEM_HEIGHT = 100
+SHOP_ITEM_PADDING = 10
+SHOP_ITEM_IMAGE_SIZE = 128  # 모든 상점 아이템 이미지 크기를 128x128로 통일
+SHOP_RIGHT_PANEL_WIDTH_RATIO = 0.35 # 오른쪽 패널이 전체 패널 너비에서 차지하는 비율
+# SHOP_RIGHT_PANEL_WIDTH는 SHOP_PANEL_WIDTH에 따라 동적으로 계산됩니다.
+
+# 선택된 아이템 (상세 정보를 표시하기 위함)
+selected_shop_item_index = -1
+selected_tool_shop_item_index = -1
+
+# 구매 버튼
+buy_button_rect = pygame.Rect(0, 0, 120, 50) # 위치는 draw_shop_screen에서 계산
+
+class TemporaryMessageDisplay:
+    def __init__(self, text_or_parts, center_pos_tuple, duration=2.0, color=BLACK, font=None, is_multi_colored=False):
+        # 텍스트가 화면 위쪽에서 나오도록 center_pos_tuple을 사용
+        self.center_pos = center_pos_tuple
+        self.duration = duration
+        self.fade_in_duration = duration * 0.4
+        self.hold_duration = duration * 0.2
+        self.fade_out_duration = duration * 0.4
+        self.font = font
+        self.start_time = time.time()
+        self.alpha = 0
+        self.done = False
+        self.is_multi_colored = is_multi_colored
+        if self.is_multi_colored:
+            # text_or_parts is a list of (text_string, color_tuple)
+            self.text_parts = text_or_parts
+        else:
+            # text_or_parts is a single string, convert to consistent format
+            self.text_parts = [(text_or_parts, color)]
+
+    def update(self):
+        if self.done:
+            return
+        elapsed_time = time.time() - self.start_time
+        if elapsed_time < self.fade_in_duration:
+            self.alpha = int(255 * (elapsed_time / self.fade_in_duration))
+        elif elapsed_time < self.fade_in_duration + self.hold_duration:
+            self.alpha = 255
+        elif elapsed_time < self.duration:
+            fade_out_elapsed = elapsed_time - (self.fade_in_duration + self.hold_duration)
+            self.alpha = int(255 * (1 - (fade_out_elapsed / self.fade_out_duration)))
+        else:
+            self.alpha = 0
+            self.done = True
+
+    def draw(self, surface):
+        if self.done:
+            return
+
+        # Calculate total width to center the multi-part text
+        total_width = 0
+        rendered_parts = []
+        for text_part, part_color in self.text_parts:
+            part_surface = self.font.render(text_part, True, part_color)
+            total_width += part_surface.get_width()
+            rendered_parts.append(part_surface)
+
+        start_x = self.center_pos[0] - total_width // 2
+        current_x = start_x
+        for part_surface in rendered_parts:
+            part_surface.set_alpha(self.alpha)
+            surface.blit(part_surface, (current_x, self.center_pos[1] - part_surface.get_height() // 2))
+            current_x += part_surface.get_width()
+
+active_temporary_messages = []
+
+# 씨앗 선택 메뉴 옵션 (PLANT_INFO 딕셔너리를 사용하여 동적으로 생성)
+seed_options = []
+seed_index_map = [] # 옵션의 순서와 PLANT_INFO의 키를 매핑
+x_offset_multiplier = 0 # 씨앗 버튼 옆으로 나열될 때의 x 위치 계산에 사용
+for plant_type, info in PLANT_INFO.items():
+    seed_initial_x = seed_select_button_rect.x
+    seed_target_x = seed_select_button_rect.right + TOOL_SPACING + (x_offset_multiplier * (TOOL_ICON_SIZE + TOOL_SPACING))
+    seed_y = seed_select_button_rect.y
+    seed_rect = pygame.Rect(seed_initial_x, seed_y, TOOL_ICON_SIZE, TOOL_ICON_SIZE)
+    seed_image = info["seed_image"]
+    seed_options.append({'rect': seed_rect, 'image': seed_image, 'plant_type': plant_type, 'target_x': seed_target_x, 'initial_x': seed_initial_x})
+    seed_index_map.append(plant_type) # 순서대로 식물 타입 저장
+    x_offset_multiplier += 1
+
+MAX_SEED_ANIMATION_DISTANCE = seed_options[0]['target_x'] - seed_options[0]['initial_x']
+
+# --- 밭(경작지) 및 화분 관련 변수 (사진과 동일하게 조정) ---
+ITEM_SIZE = 80 # 밭과 화분의 가로세로 크기
+ITEM_GAP_X = 15
+ITEM_GAP_Y = 15
+NUM_ITEMS_PER_ROW = 6
+GLOBAL_X_OFFSET = 30
+FIELD_START_X = 140 + GLOBAL_X_OFFSET
+FIELD_START_Y = 400
+
+field_states = []
+for col in range(NUM_ITEMS_PER_ROW):
+    x = FIELD_START_X + col * (ITEM_SIZE + ITEM_GAP_X)
+    y = FIELD_START_Y
+    field_rect = pygame.Rect(x, y, ITEM_SIZE, ITEM_SIZE)
+    field_states.append({
+        'rect': field_rect,
+        'planted_plant_type': None, # 심겨진 식물 타입 (예: "sunflower", "potato")
+        'current_growth_frame': 0,
+        'final_scale_factor': 1.0 # 작물의 최종 크기 배율 (0.7 ~ 1.3 범위)
+    })
+
+POT_START_X = 140 + GLOBAL_X_OFFSET + (1.5 * (ITEM_SIZE + ITEM_GAP_X))
+POT_START_Y = FIELD_START_Y + ITEM_SIZE + ITEM_GAP_Y
+pot_states = []
+for col in range(NUM_ITEMS_PER_ROW):
+    x = POT_START_X + col * (ITEM_SIZE + ITEM_GAP_X)
+    y = POT_START_Y
+    pot_rect = pygame.Rect(x, y, ITEM_SIZE, ITEM_SIZE)
+    pot_states.append({
+        'rect': pot_rect,
+        'planted_plant_type': None, # 심겨진 식물 타입 (예: "sunflower", "potato")
+        'current_growth_frame': 0,
+        'final_scale_factor': 1.0 # 작물의 최종 크기 배율 (0.7 ~ 1.3 범위)
+    })
+
+hovered_plot_type = None
+hovered_plot_index = -1
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 # 작물별 가격 정보 (키는 식물 타입 문자열과 매칭)
 # (중복 선언 제거, 위에서 이미 선언됨)
 
+<<<<<<< HEAD
+=======
+# --- 인벤토리 ---
+# 씨앗 이름 (예: "sunflower") -> 수량
+player_inventory = {
+    "sunflower": 5,
+    "lettuce": 5,
+    "potato": 5,
+    "pea": 5,
+    "dragonfruit": 5
+} # 초기 소지 씨앗
+
+# 플레이어가 현재 소지한 도구 정보 (ID, 배율)
+player_tools = {
+    'watering_can': {'id': 'watering_can_rusted', 'multiplier': 1},
+    'scythe': {'id': 'sickle_cracked', 'multiplier': 1} # 낫은 기본 배율 1로 시작
+}
+
+# --- 상점 아이템 데이터 (판매할 씨앗 정보) ---
+# 가격은 임의로 설정합니다. 실제 게임에 맞춰 조정하세요.
+shop_items = [
+    {"plant_type": "sunflower", "name": PLANT_INFO["sunflower"]["seed_name"], "price": 2000, "image": PLANT_INFO["sunflower"]["seed_image"], "description": "해바라기가 만개를 하면 팔 수 있지않을까?"},
+    {"plant_type": "lettuce", "name": PLANT_INFO["lettuce"]["seed_name"], "price": 16000, "image": PLANT_INFO["lettuce"]["seed_image"], "description": "꽤 쓸만한 작물일거 같다 1000개를 채집하면 30,000,000?"},
+    {"plant_type": "potato", "name": PLANT_INFO["potato"]["seed_name"], "price": 25000, "image": PLANT_INFO["potato"]["seed_image"], "description": "감자는 '만'ㅎ을수록 좋다."},
+    {"plant_type": "pea", "name": PLANT_INFO["pea"]["seed_name"], "price": 200000, "image": PLANT_INFO["pea"]["seed_image"], "description": "신비한 힘이 깃든거 같다."},
+    {"plant_type": "dragonfruit", "name": PLANT_INFO["dragonfruit"]["seed_name"], "price": 5000000, "image": PLANT_INFO["dragonfruit"]["seed_image"], "description": "비싸지만 값어치는 하는 것 같다."},
+]
+
+# 파일 상단이나, load_tool_image 함수 호출 전에
+SHOP_ITEM_IMAGE_SIZE = 128  # 원하는 이미지 크기로 설정 (예: 128x128 픽셀)
+
+def load_tool_image(image_name):
+    # 수정된 부분: BASE_DIR을 사용하여 경로 생성
+    image_path = BASE_DIR / "assets" / "images" / image_name
+    if not image_path.exists():
+        # 기본 이미지 로드 또는 오류 처리
+        return None # 또는 적절한 기본 이미지
+    img = pygame.image.load(image_path).convert_alpha()
+    return pygame.transform.scale(img, (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
+
+# --- 도구 상점 아이템 데이터 (물뿌리개와 낫) ---
+# 이미지 로드를 위한 헬퍼 함수
+def load_tool_image(filename):
+    # 수정된 부분: BASE_DIR을 사용하여 경로 생성
+    path = BASE_DIR / "assets" / "images" / filename
+    try:
+        img = pygame.image.load(path)
+        return pygame.transform.scale(img, (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
+    except pygame.error as e:
+        print(f"도구 이미지 로드 오류 {path}: {e}")
+        # 이미지 로드 실패 시 기본 이미지 반환 또는 None 반환
+        return pygame.transform.scale(pygame.Surface((SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE)), (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE)) # 빈 Surface 반환
+
+tool_shop_items = {
+    "watering_can": [
+        {"id": "watering_can_rusted", "name": "녹슨 물뿌리개", "price": 0, "multiplier": 1, "description": "오래되어 녹이 슨 물뿌리개입니다. 물을 줍니다.", "image": load_tool_image("watering_can_rusted.png") if (BASE_DIR / "assets" / "images" / "watering_can_rusted.png").exists() else watering_can_image},
+        {"id": "watering_can_basic", "name": "기본 물뿌리개", "price": 50000, "multiplier": 2, "description": "기본적으로 제공되는 물뿌리개입니다. 물을 줍니다.", "image": load_tool_image("watering_can_tier1.png")},
+        {"id": "watering_can_good", "name": "조금 쓸만한 물뿌리개", "price": 200000, "multiplier": 4, "description": "조금 더 강력해진 물뿌리개입니다. 물을 더 많이 줍니다.", "image": load_tool_image("watering_can_tier2.png")},
+        {"id": "watering_can_better", "name": "좋아진 물뿌리개", "price": 1000000, "multiplier": 8, "description": "성능이 향상된 물뿌리개입니다. 작물 성장을 촉진합니다.", "image": load_tool_image("watering_can_tier3.png")},
+        {"id": "watering_can_powerful", "name": "강력해진 물뿌리개", "price": 5000000, "multiplier": 16, "description": "매우 강력한 물뿌리개입니다. 기적적인 성장을 가능케 합니다.", "image": load_tool_image("watering_can_tier4.png")},
+        {"id": "watering_can_masterpiece", "name": "장인이 만든 물뿌리개", "price": 20000000, "multiplier": 32, "description": "장인의 손길이 닿은 명품 물뿌리개입니다. 성장의 극치를 보여줍니다.", "image": load_tool_image("watering_can_tier5.png")},
+        {"id": "watering_can_legendary", "name": "전설의 물뿌리개", "price": 100000000, "multiplier": 64, "description": "전설 속에서만 전해지던 물뿌리개입니다. 전체 밭에 영향을 줍니다.", "image": load_tool_image("watering_can_tier6.png")},
+    ],
+    "scythe": [
+        {"id": "scythe_basic", "name": "기본 낫", "price": 0, "multiplier": 1, "description": "기본적으로 제공되는 낡은 낫입니다. 수확에 사용됩니다.", "image": load_tool_image("sickle_cracked.png")if (BASE_DIR / "assets" / "images" / "sickle_cracked.png").exists() else scythe_image}, # 기본 낫은 가격 0,
+        {"id": "scythe_decent", "name": "조금 쓸만한 낫", "price": 150000, "multiplier": 1.5, "description": "날이 잘 선 낫입니다. 조금 더 많은 수확물을 얻을 수 있습니다.", "image": load_tool_image("scythe_tier1.png")},
+        {"id": "scythe_normal", "name": "평범한 낫", "price": 1000000, "multiplier": 2, "description": "무난하게 사용할 수 있는 낫입니다. 안정적인 수확량에 기여합니다.", "image": load_tool_image("scythe_tier2.png")},
+        {"id": "scythe_improved", "name": "좋아진 낫", "price": 5000000, "multiplier": 2.5, "description": "수확 효율이 눈에 띄게 좋아진 낫입니다. 농가의 희망이죠.", "image": load_tool_image("scythe_tier3.png")},
+        {"id": "scythe_abandoned_master", "name": "장인이 쓰다 버린 낫", "price": 20000000, "multiplier": 4, "description": "장인이 더 이상 사용하지 않아 버려진 낫입니다. 엄청난 힘이 숨겨져 있습니다.", "image": load_tool_image("scythe_tier4.png")},
+        {"id": "scythe_omniblade", "name": "모든걸 베어버릴것 같은 낫", "price": 100000000, "multiplier": 6, "description": "강력한 힘이 느껴지는 낫입니다. 베지 못할 것이 없습니다.", "image": load_tool_image("scythe_tier5.png")},
+        {"id": "scythe_legendary", "name": "전설의 낫", "price": 500000000, "multiplier": 10, "description": "전설 속에 등장하는 낫입니다. 모든 작물을 풍요롭게 만듭니다.", "image": load_tool_image("scythe_tier6.png")},
+    ]
+}
+
+# 상점 스크롤 관련 변수
+shop_scroll_offset = 0
+SHOP_SCROLL_SPEED = 20 # 한 번 스크롤할 때 이동할 픽셀 수
+
+# 상점 패널 내 아이템 목록 영역을 전역 변수로 선언 (이벤트 처리에서 사용하기 위함)
+shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
+
+# 도구 상점 스크롤 관련 변수
+tool_shop_scroll_offset = 0
+tool_shop_item_list_rect = pygame.Rect(0, 0, 0, 0) # 초기화
+selected_tool_category = "watering_can" # 기본적으로 물뿌리개 탭이 선택
+
+# 상점 UI 레이아웃을 위한 변수
+SHOP_ITEM_HEIGHT = 100
+SHOP_ITEM_PADDING = 10
+SHOP_ITEM_IMAGE_SIZE = 128  # 모든 상점 아이템 이미지 크기를 128x128로 통일
+SHOP_RIGHT_PANEL_WIDTH_RATIO = 0.35 # 오른쪽 패널이 전체 패널 너비에서 차지하는 비율
+# SHOP_RIGHT_PANEL_WIDTH는 SHOP_PANEL_WIDTH에 따라 동적으로 계산됩니다.
+
+# 선택된 아이템 (상세 정보를 표시하기 위함)
+selected_shop_item_index = -1
+selected_tool_shop_item_index = -1
+
+# 구매 버튼
+buy_button_rect = pygame.Rect(0, 0, 120, 50) # 위치는 draw_shop_screen에서 계산
+
+class TemporaryMessageDisplay:
+    def __init__(self, text_or_parts, center_pos_tuple, duration=2.0, color=BLACK, font=None, is_multi_colored=False):
+        # 텍스트가 화면 위쪽에서 나오도록 center_pos_tuple을 사용
+        self.center_pos = center_pos_tuple
+        self.duration = duration
+        self.fade_in_duration = duration * 0.4
+        self.hold_duration = duration * 0.2
+        self.fade_out_duration = duration * 0.4
+        self.font = font
+        self.start_time = time.time()
+        self.alpha = 0
+        self.done = False
+        self.is_multi_colored = is_multi_colored
+        if self.is_multi_colored:
+            # text_or_parts is a list of (text_string, color_tuple)
+            self.text_parts = text_or_parts
+        else:
+            # text_or_parts is a single string, convert to consistent format
+            self.text_parts = [(text_or_parts, color)]
+
+    def update(self):
+        if self.done:
+            return
+        elapsed_time = time.time() - self.start_time
+        if elapsed_time < self.fade_in_duration:
+            self.alpha = int(255 * (elapsed_time / self.fade_in_duration))
+        elif elapsed_time < self.fade_in_duration + self.hold_duration:
+            self.alpha = 255
+        elif elapsed_time < self.duration:
+            fade_out_elapsed = elapsed_time - (self.fade_in_duration + self.hold_duration)
+            self.alpha = int(255 * (1 - (fade_out_elapsed / self.fade_out_duration)))
+        else:
+            self.alpha = 0
+            self.done = True
+
+    def draw(self, surface):
+        if self.done:
+            return
+
+        # Calculate total width to center the multi-part text
+        total_width = 0
+        rendered_parts = []
+        for text_part, part_color in self.text_parts:
+            part_surface = self.font.render(text_part, True, part_color)
+            total_width += part_surface.get_width()
+            rendered_parts.append(part_surface)
+
+        start_x = self.center_pos[0] - total_width // 2
+        current_x = start_x
+        for part_surface in rendered_parts:
+            part_surface.set_alpha(self.alpha)
+            surface.blit(part_surface, (current_x, self.center_pos[1] - part_surface.get_height() // 2))
+            current_x += part_surface.get_width()
+
+active_temporary_messages = []
+
+# 씨앗 선택 메뉴 옵션 (PLANT_INFO 딕셔너리를 사용하여 동적으로 생성)
+seed_options = []
+seed_index_map = [] # 옵션의 순서와 PLANT_INFO의 키를 매핑
+x_offset_multiplier = 0 # 씨앗 버튼 옆으로 나열될 때의 x 위치 계산에 사용
+for plant_type, info in PLANT_INFO.items():
+    seed_initial_x = seed_select_button_rect.x
+    seed_target_x = seed_select_button_rect.right + TOOL_SPACING + (x_offset_multiplier * (TOOL_ICON_SIZE + TOOL_SPACING))
+    seed_y = seed_select_button_rect.y
+    seed_rect = pygame.Rect(seed_initial_x, seed_y, TOOL_ICON_SIZE, TOOL_ICON_SIZE)
+    seed_image = info["seed_image"]
+    seed_options.append({'rect': seed_rect, 'image': seed_image, 'plant_type': plant_type, 'target_x': seed_target_x, 'initial_x': seed_initial_x})
+    seed_index_map.append(plant_type) # 순서대로 식물 타입 저장
+    x_offset_multiplier += 1
+
+MAX_SEED_ANIMATION_DISTANCE = seed_options[0]['target_x'] - seed_options[0]['initial_x']
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 # --- 밭(경작지) 및 화분 관련 변수 (사진과 동일하게 조정) ---
 ITEM_SIZE = 80 # 밭과 화분의 가로세로 크기
@@ -1081,7 +1921,11 @@ def draw_shop_screen():
     pygame.draw.rect(screen, WHITE, shop_panel_rect, 5, border_radius=15)
 
     # 상점 제목을 더 아래로 내림
+<<<<<<< HEAD
     shop_title_text = shop_title_font.render("씨앗 상점", True, WHITE)
+=======
+    shop_title_text = shop_title_font.render("상점", True, WHITE)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     shop_title_text_rect = shop_title_text.get_rect(center=(shop_panel_rect.centerx, shop_panel_rect.top + 70)) # 제목 Y 좌표 조정
     screen.blit(shop_title_text, shop_title_text_rect)
 
@@ -1129,13 +1973,23 @@ def draw_shop_screen():
     screen.set_clip(shop_item_list_rect)
 
     for i, item in enumerate(shop_items):
+<<<<<<< HEAD
         item_relative_y = i * (SHOP_ITEM_HEIGHT + SHOP_ITEM_PADDING) + SHOP_ITEM_PADDING
         item_y = shop_item_list_rect.top + item_relative_y - shop_scroll_offset
 
+=======
+        # 스크롤 오프셋 적용된 실제 아이템 위치 계산
+        item_relative_y = i * (SHOP_ITEM_HEIGHT + SHOP_ITEM_PADDING) + SHOP_ITEM_PADDING
+        item_y = shop_item_list_rect.top + item_relative_y - shop_scroll_offset
+
+        # 아이템이 현재 보이는 목록 영역 내에 있는지 확인 (위쪽/아래쪽 모두)
+        # 클리핑이 적용되었으므로 이 조건은 사실상 필요 없지만, 명시적으로 남겨둠
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         if item_y + SHOP_ITEM_HEIGHT > shop_item_list_rect.top and item_y < shop_item_list_rect.bottom:
             item_rect_in_list = pygame.Rect(shop_item_list_rect.left + SHOP_ITEM_PADDING, item_y,
                                             shop_item_list_rect.width - SHOP_ITEM_PADDING * 2, SHOP_ITEM_HEIGHT)
 
+<<<<<<< HEAD
 
             # 선택된 아이템만 노란색 하이라이트, 나머지는 기본색
             if i == selected_shop_item_index:
@@ -1159,6 +2013,29 @@ def draw_shop_screen():
             # 아이템 가격 (조금 오른쪽으로 조정)
             price_text = font.render(f"가격: {item['price']:,}골드", True, BLUE)
             price_text_rect = price_text.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING + 90, item_rect_in_list.centery + 15))
+=======
+            # 선택된 아이템만 노란색 하이라이트, 나머지는 기본색
+            if i == selected_tool_shop_item_index:
+                pygame.draw.rect(screen, YELLOW, item_rect_in_list, border_radius=5)
+            else:
+                pygame.draw.rect(screen, LIGHT_GRAY, item_rect_in_list, border_radius=5)
+            if item["image"]:
+                # 이미지 원본 크기를 SHOP_ITEM_IMAGE_SIZE에 맞춰 스케일
+                scaled_item_image = pygame.transform.scale(item["image"], (SHOP_ITEM_IMAGE_SIZE, SHOP_ITEM_IMAGE_SIZE))
+                # 이미지를 item_rect_in_list의 왼쪽에서 SHOP_ITEM_PADDING 만큼 띄우고 중앙 정렬
+                img_rect = scaled_item_image.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING, item_rect_in_list.centery))
+                screen.blit(scaled_item_image, img_rect)
+
+            # 아이템 이름 (오른쪽으로 이동)
+            name_text = seed_name_font.render(item["name"], True, BLACK)
+            # 이미지 너비(SHOP_ITEM_IMAGE_SIZE)와 패딩을 고려하여 텍스트 시작 위치 조정
+            name_text_rect = name_text.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery - 15))
+            screen.blit(name_text, name_text_rect)
+
+            # 아이템 가격 (오른쪽으로 이동)
+            price_text = font.render(f"가격: {item['price']:,}골드", True, BLUE)
+            price_text_rect = price_text.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery + 15))
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
             screen.blit(price_text, price_text_rect)
     
     # 클리핑 영역 해제
@@ -1309,9 +2186,18 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
                                             tool_shop_item_list_rect.width - SHOP_ITEM_PADDING * 2, SHOP_ITEM_HEIGHT)
 
             equipped_id = player_tools[selected_tool_category]['id']
+<<<<<<< HEAD
             owned_tool_ids = player_tools[selected_tool_category].get('owned_tool_ids', [])
             is_equipped = (equipped_id == item['id'])
             is_owned = item['id'] in owned_tool_ids or is_equipped
+=======
+            # 실제 구매한 도구 id 목록을 관리
+            if 'owned_tool_ids' not in player_tools[selected_tool_category]:
+                player_tools[selected_tool_category]['owned_tool_ids'] = []
+            owned_tool_ids = player_tools[selected_tool_category]['owned_tool_ids']
+            is_equipped = (equipped_id == item['id'])
+            is_owned = item['id'] in owned_tool_ids
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
             # 선택된 아이템만 노란색 하이라이트, 나머지는 기본색
             if i == selected_tool_shop_item_index:
@@ -1319,6 +2205,11 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
             else:
                 pygame.draw.rect(screen, LIGHT_GRAY, item_rect_in_list, border_radius=5)
 
+<<<<<<< HEAD
+=======
+            # 상태 텍스트(장착중/소지함) 표시: 배경색 없이 텍스트만 (아이템 이름 렌더링 이후에 위치)
+
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
             pygame.draw.rect(screen, DARK_GRAY, item_rect_in_list, 2, border_radius=5)
 
             # 아이템 이미지 (항상 80x80으로 스케일)
@@ -1327,6 +2218,7 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
                 img_rect = scaled_img.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING, item_rect_in_list.centery))
                 screen.blit(scaled_img, img_rect)
 
+<<<<<<< HEAD
             # 아이템 이름 (조금 오른쪽으로 조정)
             name_text = seed_name_font.render(item["name"], True, BLACK)
             name_text_rect = name_text.get_rect(midleft=(item_rect_in_list.left + SHOP_ITEM_PADDING + 90, item_rect_in_list.centery - 15))
@@ -1343,6 +2235,33 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
             screen.blit(multiplier_text, multiplier_text_rect)
 
             # 상태 텍스트는 한 번만, 우선순위: 장착중 > 소지함 (구매하지 않은 경우 표시 없음)
+=======
+            # 아이템 이름
+            name_text = seed_name_font.render(item["name"], True, BLACK)
+            name_text_rect = name_text.get_rect(midleft=(item_rect_in_list.left + (SHOP_ITEM_PADDING + 30) + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery - 15))
+            screen.blit(name_text, name_text_rect)
+
+            # 아이템 가격 및 배율
+            price_text = price_text_font.render(f"가격: {item['price']:,}골드", True, BLUE)
+            price_text_rect = price_text.get_rect(midleft=(item_rect_in_list.left + (SHOP_ITEM_PADDING + 30) + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery + 15))
+            screen.blit(price_text, price_text_rect)
+
+            multiplier_text = multiplier_text_font.render(f"배율: {item['multiplier']}{' 전체' if item['id'] == 'watering_can_legendary' else ''}", True, ORANGE)
+            multiplier_text_rect = multiplier_text.get_rect(midright=(item_rect_in_list.right - (SHOP_ITEM_PADDING + 30), item_rect_in_list.centery))
+            screen.blit(multiplier_text, multiplier_text_rect)
+
+            # 상태 텍스트(장착중/소지함) 가격 아래에는 표시하지 않음 (이름 옆에만 표시)
+
+            # 아이템 가격 및 배율
+            price_text = price_text_font.render(f"가격: {item['price']:,}골드", True, BLUE)
+            price_text_rect = price_text.get_rect(midleft=(item_rect_in_list.left + (SHOP_ITEM_PADDING + 30) + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery + 15))
+            screen.blit(price_text, price_text_rect)
+
+            multiplier_text = multiplier_text_font.render(f"배율: {item['multiplier']}{' 전체' if item['id'] == 'watering_can_legendary' else ''}", True, ORANGE)
+            multiplier_text_rect = multiplier_text.get_rect(midright=(item_rect_in_list.right - (SHOP_ITEM_PADDING + 30), item_rect_in_list.centery))
+            screen.blit(multiplier_text, multiplier_text_rect)
+
+            # 상태 텍스트 표시
             status_text = None
             status_color = None
             if is_equipped:
@@ -1351,7 +2270,32 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
             elif is_owned:
                 status_text = "소지함"
                 status_color = (100, 200, 100)
+            if status_text:
+                status_render = font.render(status_text, True, status_color)
+                status_rect = status_render.get_rect(midleft=(name_text_rect.right + 10, name_text_rect.centery))
+                screen.blit(status_render, status_rect)
+            price_text = price_text_font.render(f"가격: {item['price']:,}골드", True, BLUE)
+            price_text_rect = price_text.get_rect(midleft=(item_rect_in_list.left + (SHOP_ITEM_PADDING + 30) + SHOP_ITEM_IMAGE_SIZE + 20, item_rect_in_list.centery + 15))
+            screen.blit(price_text, price_text_rect)
+
+            multiplier_text = multiplier_text_font.render(f"배율: {item['multiplier']}{' 전체' if item['id'] == 'watering_can_legendary' else ''}", True, ORANGE)
+            multiplier_text_rect = multiplier_text.get_rect(midright=(item_rect_in_list.right - (SHOP_ITEM_PADDING + 30), item_rect_in_list.centery))
+            screen.blit(multiplier_text, multiplier_text_rect)
+
+            # 상태 텍스트 표시
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
+            status_text = None
+            status_color = None
+            if is_equipped:
+                status_text = "장착중"
+                status_color = (50, 180, 255)
+            elif is_owned:
+                status_text = "소지함"
+                status_color = (100, 200, 100)
+<<<<<<< HEAD
             # 구매하지 않은 경우 상태 텍스트 없음
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
             if status_text:
                 status_render = font.render(status_text, True, status_color)
                 status_rect = status_render.get_rect(midleft=(name_text_rect.right + 10, name_text_rect.centery))
@@ -1418,6 +2362,7 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
         is_equipped = (equipped_id == selected_item['id'])
         is_owned = selected_item['id'] in owned_tool_ids
         can_afford = player_money >= selected_item["price"]
+<<<<<<< HEAD
         # 버튼 라벨: 장착중 > 장착 > 구매
         if is_equipped:
             button_label = "장착중"
@@ -1425,6 +2370,11 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
         elif is_owned:
             button_label = "장착"
             button_color = (50, 200, 80)  # 장착 가능(초록)
+=======
+        if is_owned:
+            button_label = "장착"
+            button_color = BLUE if not is_equipped else TOOL_DISABLED_COLOR
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         else:
             button_label = "구매"
             button_color = GREEN if can_afford else TOOL_DISABLED_COLOR
@@ -1432,6 +2382,17 @@ def draw_tool_shop_screen(): # 기존 draw_crafting_screen에서 이름 변경
         buy_text = button_font.render(button_label, True, WHITE)
         buy_text_rect = buy_text.get_rect(center=buy_button_rect.center)
         screen.blit(buy_text, buy_text_rect)
+<<<<<<< HEAD
+=======
+        is_owned = (player_tools[selected_tool_category]['id'] == selected_item['id'])
+        
+        buy_button_color = GREEN if can_afford and not is_owned else TOOL_DISABLED_COLOR
+        
+        pygame.draw.rect(screen, buy_button_color, buy_button_rect, border_radius=5)
+        buy_text = button_font.render("구매" if not is_owned else "소지함", True, WHITE)
+        buy_text_rect = buy_text.get_rect(center=buy_button_rect.center)
+        screen.blit(buy_text, buy_text_rect)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
 
 def draw_title_screen():
@@ -1457,6 +2418,7 @@ def draw_title_screen():
     continue_text_rect = continue_text.get_rect(center=continue_button_rect.center)
     screen.blit(continue_text, continue_text_rect)
 
+<<<<<<< HEAD
     # 설정 아이콘 (인게임과 동일한 위치: 오른쪽 아래)
     settings_icon_rect = pygame.Rect(WIDTH - SETTINGS_ICON_SIZE - 10, HEIGHT - SETTINGS_ICON_SIZE - 10, SETTINGS_ICON_SIZE, SETTINGS_ICON_SIZE)
     if settings_icon:
@@ -1465,6 +2427,8 @@ def draw_title_screen():
         pygame.draw.rect(screen, GRAY, settings_icon_rect, border_radius=10)
     # 마우스 클릭 처리는 메인 루프에서 settings_icon_rect로 처리
 
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 def draw_tool_button(rect, image, tool_name_for_comparison):
     """도구 버튼을 그립니다. 활성화 상태에 따라 테두리 색상과 두께가 변합니다."""
     border_color = BLACK
@@ -1495,6 +2459,7 @@ def draw_game_screen():
         overlay = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         # 단계별 오버레이 투명도 및 강조 처리
         if tutorial_step == 7:
+<<<<<<< HEAD
             overlay.fill((0, 0, 0, 120))  # 마지막 단계: 오버레이(반투명)
             screen.blit(overlay, (0, 0))
             # draw_skip_circle 이후에 문구를 띄워 항상 최상단에 보이게 함
@@ -1512,6 +2477,12 @@ def draw_game_screen():
             sub_text = tutorial_sub_font.render(sub_msg, True, YELLOW)
             sub_text_rect = sub_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 55))
             screen.blit(sub_text, sub_text_rect)
+=======
+            overlay.fill((0, 0, 0, 120))  # 마지막 단계: 오버레이
+            tutorial_done_text = button_font.render("튜토리얼이 완료되었습니다!", True, YELLOW)
+            tutorial_done_text_rect = tutorial_done_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+            screen.blit(tutorial_done_text, tutorial_done_text_rect)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         elif tutorial_step == 6:
             overlay.fill((0, 0, 0, 180))
             pot = pot_states[0]
@@ -1524,7 +2495,11 @@ def draw_game_screen():
             screen.blit(main_text, main_text_rect)
         else:
             overlay.fill((0, 0, 0, 180))
+<<<<<<< HEAD
             screen.blit(overlay, (0, 0))
+=======
+        screen.blit(overlay, (0, 0))
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         # 단계별 텍스트/강조 처리 (예시: 1~6단계)
         if tutorial_step == 1:
             highlight_rect = seed_select_button_rect.inflate(20, 20)
@@ -1581,7 +2556,11 @@ def draw_game_screen():
 
     # 설정 아이콘 (오른쪽 아래로 이동)
     if settings_icon:
+<<<<<<< HEAD
         settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - 10, HEIGHT - 10)) # 오른쪽 아래에 배치
+=======
+        settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - scale_size(10), HEIGHT - scale_size(10))) # 오른쪽 아래에 배치 (반응형)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
         screen.blit(settings_icon, settings_icon_rect)
     else:
         # 아이콘이 없을 경우 임시 사각형으로 표시 (디버깅용)
@@ -1589,7 +2568,11 @@ def draw_game_screen():
 
     # 상점 및 도구 상점 버튼
     pygame.draw.rect(screen, BLUE, shop_button_rect, border_radius=5)
+<<<<<<< HEAD
     shop_text = ingame_button_font.render("씨앗 상점", True, WHITE)
+=======
+    shop_text = ingame_button_font.render("상점", True, WHITE)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     shop_text_rect = shop_text.get_rect(center=shop_button_rect.center)
     screen.blit(shop_text, shop_text_rect)
 
@@ -1797,6 +2780,7 @@ def draw_game_screen():
             highlight_rect = watering_can_rect.inflate(10, 10)
             pygame.draw.rect(screen, YELLOW, highlight_rect, 10, border_radius=15)
             draw_tool_button(watering_can_rect, watering_can_image, 'watering_can')
+<<<<<<< HEAD
             # 배율 시스템 설명 문구를 한 글자씩 자간을 넓혀서 그림
             def draw_text_with_spacing(text, font, color, start_pos, spacing):
                 x, y = start_pos
@@ -1827,6 +2811,13 @@ def draw_game_screen():
             # 기존 안내 텍스트(하얀색)는 물뿌리개 버튼과 겹치지 않게 base_y 기준 아래쪽에 배치
             tutorial_text = button_font.render("물뿌리개를 클릭하세요!", True, WHITE)
             tutorial_text_rect = tutorial_text.get_rect(midleft=(text_x, base_y + line_gap * 3 + 10))
+=======
+            # 텍스트를 물뿌리개 오른쪽으로 이동, 화면에 잘리지 않게
+            tutorial_text = button_font.render("물뿌리개를 클릭하세요!", True, WHITE)
+            text_x = watering_can_rect.right + 40
+            text_y = watering_can_rect.top + watering_can_rect.height // 2
+            tutorial_text_rect = tutorial_text.get_rect(midleft=(text_x, text_y))
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
             screen.blit(tutorial_text, tutorial_text_rect)
         elif tutorial_step == 5:
             # 튜토리얼5: 씨앗이 심어진 화분 강조(노란 테두리) 및 안내 텍스트, 내부는 원래 색상(BROWN)
@@ -1841,7 +2832,11 @@ def draw_game_screen():
                     tutorial_text = button_font.render("화분에 물을 뿌려보세요!", True, WHITE)
                     tutorial_text_rect = tutorial_text.get_rect(center=(pot_rect.centerx, pot_rect.top - 40))
                     # 작물 성장 안내 텍스트 추가
+<<<<<<< HEAD
                     growth_text = button_font.render("작물은 하루가 지날 때마다 조금씩 자랍니다", True, YELLOW)
+=======
+                    growth_text = button_font.render("작물은 하루가 지날 때마다 조금씩 자랍니다", True, WHITE)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
                     growth_text_rect = growth_text.get_rect(center=(pot_rect.centerx, pot_rect.top - 80))
                     screen.blit(growth_text, growth_text_rect)
                     screen.blit(tutorial_text, tutorial_text_rect)
@@ -1855,7 +2850,11 @@ def draw_game_screen():
                 tutorial_text = button_font.render("화분에 물을 뿌려보세요!", True, WHITE)
                 tutorial_text_rect = tutorial_text.get_rect(center=(pot_rect.centerx, pot_rect.top - 40))
                 # 작물 성장 안내 텍스트 추가
+<<<<<<< HEAD
                 growth_text = button_font.render("작물은 하루가 지날 때마다 조금씩 자랍니다", True, YELLOW)
+=======
+                growth_text = button_font.render("작물은 하루가 지날 때마다 조금씩 자랍니다", True, WHITE)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
                 growth_text_rect = growth_text.get_rect(center=(pot_rect.centerx, pot_rect.top - 80))
                 screen.blit(growth_text, growth_text_rect)
                 screen.blit(tutorial_text, tutorial_text_rect)
@@ -2120,7 +3119,11 @@ def handle_game_screen_click(pos):
                 return
             return
     # 설정 아이콘 클릭
+<<<<<<< HEAD
     settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - 10, HEIGHT - 10)) # 오른쪽 아래로 이동
+=======
+    settings_icon_rect = settings_icon.get_rect(bottomright=(WIDTH - scale_size(10), HEIGHT - scale_size(10))) # 오른쪽 아래로 이동 (반응형)
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     if settings_icon_rect.collidepoint(pos):
         previous_game_state = game_state
         game_state = 'SETTINGS'
@@ -2575,6 +3578,7 @@ while running:
             elif event.key == pygame.K_F3:
                 player_money += 100000000  # 예시: 10만 원 증가. 원하는 금액으로 조절하세요.
                 print(f"소지금이 증가했습니다! 현재 소지금: {player_money}원") # 확인용 출력
+<<<<<<< HEAD
             # Q/W/R/1~5 단축키: 튜토리얼 중에는 동작하지 않음
             if not show_tutorial:
                 # Q키: 물뿌리개 선택
@@ -2606,6 +3610,8 @@ while running:
                         idx = event.key - pygame.K_1
                         if 0 <= idx < len(seed_index_map):
                             selected_seed_name = seed_index_map[idx]
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 
         if event.type == pygame.QUIT:
             save_game()  # 게임 종료 시 자동 저장
@@ -2616,6 +3622,7 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1: # 좌클릭
                 if game_state == 'TITLE':
+<<<<<<< HEAD
                     # 설정 아이콘 위치 계산 (인게임과 동일한 오른쪽 아래)
                     settings_icon_rect = pygame.Rect(WIDTH - SETTINGS_ICON_SIZE - 10, HEIGHT - SETTINGS_ICON_SIZE - 10, SETTINGS_ICON_SIZE, SETTINGS_ICON_SIZE)
                     if settings_icon_rect.collidepoint(event.pos):
@@ -2623,6 +3630,9 @@ while running:
                         game_state = 'SETTINGS'
                         previous_game_state = 'TITLE'  # 돌아갈 상태 기억
                     elif start_button_rect.collidepoint(event.pos):
+=======
+                    if start_button_rect.collidepoint(event.pos):
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
                         # 처음부터: 게임 상태 초기화(불러오기 X)
                         game_state = 'GAME'
                         show_tutorial = True  # 튜토리얼 오버레이 시작
@@ -2750,6 +3760,7 @@ while running:
     elif game_state == 'GAME':
         draw_game_screen()
     elif game_state == 'SETTINGS':
+<<<<<<< HEAD
         if previous_game_state == 'TITLE':
             # 타이틀에서 설정 진입 시 타이틀 배경 위에 설정창
             draw_title_screen()
@@ -2758,6 +3769,10 @@ while running:
             # 인게임에서 설정 진입 시 인게임 배경 위에 설정창
             draw_game_screen()
             draw_settings_screen()
+=======
+        draw_game_screen() # 게임 화면 위에 설정 화면이 오버레이되도록
+        draw_settings_screen()
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     elif game_state == 'SHOP':
         draw_game_screen() # 게임 화면 위에 상점 화면이 오버레이되도록
         draw_shop_screen()
@@ -2772,6 +3787,7 @@ while running:
     # 튜토리얼 상태일 때만 원 표시
     if show_tutorial:
         draw_skip_circle(screen, skip_progress)
+<<<<<<< HEAD
         # 7단계면 '튜토리얼 완료' 문구를 오버레이 위에 항상 다시 한 번 출력 (최상단)
         if tutorial_step == 7:
             try:
@@ -2788,6 +3804,8 @@ while running:
             sub_text = tutorial_sub_font.render(sub_msg, True, YELLOW)
             sub_text_rect = sub_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 55))
             screen.blit(sub_text, sub_text_rect)
+=======
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     pygame.display.flip()
 
 pygame.quit()

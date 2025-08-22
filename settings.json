@@ -1,6 +1,10 @@
 {
+<<<<<<< HEAD
     "volume": 0.5,
     "master_volume": 0.216,
     "music_volume": 0.428,
     "sfx_volume": 0.684
+=======
+    "volume": 0.5
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
 }

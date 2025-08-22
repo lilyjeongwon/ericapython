@@ -1,13 +1,21 @@
 {
   "player_inventory": {
+<<<<<<< HEAD
     "sunflower": 0,
     "lettuce": 0,
     "potato": 0,
     "pea": 0,
+=======
+    "sunflower": 4,
+    "lettuce": 5,
+    "potato": 5,
+    "pea": 5,
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     "dragonfruit": 0
   },
   "player_tools": {
     "watering_can": {
+<<<<<<< HEAD
       "id": "watering_can_rusted",
       "multiplier": 1,
       "owned_tool_ids": [
@@ -19,10 +27,26 @@
       "multiplier": 1,
       "owned_tool_ids": [
         "scythe_basic"
+=======
+      "id": "watering_can_better",
+      "multiplier": 8,
+      "owned_tool_ids": [
+        "watering_can_rusted",
+        "watering_can_better"
+      ]
+    },
+    "scythe": {
+      "id": "scythe_decent",
+      "multiplier": 1.5,
+      "owned_tool_ids": [
+        "sickle_cracked",
+        "scythe_decent"
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
       ]
     }
   },
   "equipped_tools": {
+<<<<<<< HEAD
     "watering_can": "watering_can_rusted",
     "scythe": "scythe_basic"
   },
@@ -36,6 +60,21 @@
     "master": 0.216,
     "music": 0.428,
     "sfx": 0.684
+=======
+    "watering_can": "watering_can_better",
+    "scythe": "scythe_decent"
+  },
+  "date": {
+    "year": 2025,
+    "month": 10,
+    "day": 10
+  },
+  "player_money": 99160100,
+  "volume": {
+    "master": 1,
+    "music": 1,
+    "sfx": 1
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
   },
   "fields": [
     {
@@ -81,6 +120,7 @@
       "final_scale_factor": 1.0
     },
     {
+<<<<<<< HEAD
       "planted_plant_type": null,
       "current_growth_frame": 0,
       "final_scale_factor": 1.0
@@ -94,6 +134,21 @@
       "planted_plant_type": null,
       "current_growth_frame": 0,
       "final_scale_factor": 1.0
+=======
+      "planted_plant_type": "dragonfruit",
+      "current_growth_frame": 100,
+      "final_scale_factor": 0.9055141776628326
+    },
+    {
+      "planted_plant_type": "dragonfruit",
+      "current_growth_frame": 100,
+      "final_scale_factor": 1.0620043612038488
+    },
+    {
+      "planted_plant_type": "dragonfruit",
+      "current_growth_frame": 100,
+      "final_scale_factor": 0.9090747732665829
+>>>>>>> 2d772facb8d82d52857fa52e6398d2378da6fc83
     },
     {
       "planted_plant_type": null,

@@ -1,0 +1,100 @@
+{
+  "player_inventory": {
+    "sunflower": 2,
+    "lettuce": 5,
+    "potato": 5,
+    "pea": 5,
+    "dragonfruit": 5
+  },
+  "player_tools": {
+    "watering_can": {
+      "id": "watering_can_rusted",
+      "multiplier": 1,
+      "owned_tool_ids": []
+    },
+    "scythe": {
+      "id": "sickle_cracked",
+      "multiplier": 1,
+      "owned_tool_ids": []
+    }
+  },
+  "equipped_tools": {
+    "watering_can": "watering_can_rusted",
+    "scythe": "sickle_cracked"
+  },
+  "date": {
+    "year": 2025,
+    "month": 3,
+    "day": 3
+  },
+  "player_money": 10100,
+  "volume": {
+    "master": 1,
+    "music": 1,
+    "sfx": 1
+  },
+  "fields": [
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    }
+  ],
+  "pots": [
+    {
+      "planted_plant_type": "sunflower",
+      "current_growth_frame": 6,
+      "final_scale_factor": 1.0744412814710163
+    },
+    {
+      "planted_plant_type": "sunflower",
+      "current_growth_frame": 2,
+      "final_scale_factor": 0.9020322219615525
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    },
+    {
+      "planted_plant_type": null,
+      "current_growth_frame": 0,
+      "final_scale_factor": 1.0
+    }
+  ]
+}
